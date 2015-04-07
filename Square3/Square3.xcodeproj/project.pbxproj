@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4A7C75671AD3606F0085553E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C75661AD3606F0085553E /* AppDelegate.swift */; };
-		4A7C75691AD3606F0085553E /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C75681AD3606F0085553E /* FirstViewController.swift */; };
-		4A7C756B1AD3606F0085553E /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C756A1AD3606F0085553E /* SecondViewController.swift */; };
+		4A7C75691AD3606F0085553E /* SketchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C75681AD3606F0085553E /* SketchViewController.swift */; };
+		4A7C756B1AD3606F0085553E /* ExtrudeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C756A1AD3606F0085553E /* ExtrudeViewController.swift */; };
 		4A7C756E1AD3606F0085553E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A7C756C1AD3606F0085553E /* Main.storyboard */; };
 		4A7C75701AD3606F0085553E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A7C756F1AD3606F0085553E /* Images.xcassets */; };
 		4A7C75731AD3606F0085553E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7C75711AD3606F0085553E /* LaunchScreen.xib */; };
@@ -30,8 +30,8 @@
 		4A7C75611AD3606F0085553E /* Square3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Square3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A7C75651AD3606F0085553E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A7C75661AD3606F0085553E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4A7C75681AD3606F0085553E /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		4A7C756A1AD3606F0085553E /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		4A7C75681AD3606F0085553E /* SketchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SketchViewController.swift; sourceTree = "<group>"; };
+		4A7C756A1AD3606F0085553E /* ExtrudeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtrudeViewController.swift; sourceTree = "<group>"; };
 		4A7C756D1AD3606F0085553E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4A7C756F1AD3606F0085553E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4A7C75721AD3606F0085553E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -80,8 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				4A7C75661AD3606F0085553E /* AppDelegate.swift */,
-				4A7C75681AD3606F0085553E /* FirstViewController.swift */,
-				4A7C756A1AD3606F0085553E /* SecondViewController.swift */,
+				4A7C75681AD3606F0085553E /* SketchViewController.swift */,
+				4A7C756A1AD3606F0085553E /* ExtrudeViewController.swift */,
 				4A7C756C1AD3606F0085553E /* Main.storyboard */,
 				4A7C756F1AD3606F0085553E /* Images.xcassets */,
 				4A7C75711AD3606F0085553E /* LaunchScreen.xib */,
@@ -215,9 +215,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A7C756B1AD3606F0085553E /* SecondViewController.swift in Sources */,
+				4A7C756B1AD3606F0085553E /* ExtrudeViewController.swift in Sources */,
 				4A7C75671AD3606F0085553E /* AppDelegate.swift in Sources */,
-				4A7C75691AD3606F0085553E /* FirstViewController.swift in Sources */,
+				4A7C75691AD3606F0085553E /* SketchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +415,7 @@
 				4A7C75841AD3606F0085553E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4A7C75851AD3606F0085553E /* Build configuration list for PBXNativeTarget "Square3Tests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +424,7 @@
 				4A7C75871AD3606F0085553E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,14 +1,13 @@
 //
-//  SecondViewController.swift
+//  SketchViewController.swift
 //  Square3
 //
-//  Created by Harry Shamansky on 4/6/15.
-//  Copyright (c) 2015 CPSC479. All rights reserved.
+//  Created on 4/6/15.
 //
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class SketchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
