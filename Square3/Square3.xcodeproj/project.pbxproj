@@ -14,6 +14,7 @@
 		4A7C75701AD3606F0085553E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A7C756F1AD3606F0085553E /* Images.xcassets */; };
 		4A7C75731AD3606F0085553E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7C75711AD3606F0085553E /* LaunchScreen.xib */; };
 		4A7C757F1AD3606F0085553E /* Square3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C757E1AD3606F0085553E /* Square3Tests.swift */; };
+		4AE0B6F01AD368B1002E6AF2 /* demosketch.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AE0B6EF1AD368B1002E6AF2 /* demosketch.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		4A7C75781AD3606F0085553E /* Square3Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Square3Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A7C757D1AD3606F0085553E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A7C757E1AD3606F0085553E /* Square3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square3Tests.swift; sourceTree = "<group>"; };
+		4AE0B6EF1AD368B1002E6AF2 /* demosketch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demosketch.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		4A7C75641AD3606F0085553E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4AE0B6EF1AD368B1002E6AF2 /* demosketch.png */,
 				4A7C75651AD3606F0085553E /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -164,6 +167,7 @@
 				TargetAttributes = {
 					4A7C75601AD3606F0085553E = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = B5TXHQBF3Z;
 					};
 					4A7C75771AD3606F0085553E = {
 						CreatedOnToolsVersion = 6.3;
@@ -195,6 +199,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AE0B6F01AD368B1002E6AF2 /* demosketch.png in Resources */,
 				4A7C756E1AD3606F0085553E /* Main.storyboard in Resources */,
 				4A7C75731AD3606F0085553E /* LaunchScreen.xib in Resources */,
 				4A7C75701AD3606F0085553E /* Images.xcassets in Resources */,
@@ -346,7 +351,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Square3/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -356,7 +363,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Square3/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

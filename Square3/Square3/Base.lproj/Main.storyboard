@@ -17,31 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tai-bY-AML">
-                                <rect key="frame" x="214" y="218" width="173" height="163"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zWf-JM-5Ur">
-                                        <rect key="frame" x="1" y="1" width="171" height="161"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="161" id="HEy-cX-ldk"/>
-                                            <constraint firstAttribute="width" constant="171" id="mou-g0-a4a"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="demosketch.png" translatesAutoresizingMaskIntoConstraints="NO" id="QAI-ML-KrH">
+                                <rect key="frame" x="142" y="157" width="316" height="285"/>
                                 <constraints>
-                                    <constraint firstItem="zWf-JM-5Ur" firstAttribute="leading" secondItem="tai-bY-AML" secondAttribute="leading" constant="1" id="4Sc-yk-o4S"/>
-                                    <constraint firstAttribute="trailing" secondItem="zWf-JM-5Ur" secondAttribute="trailing" constant="1" id="W6h-H6-etA"/>
-                                    <constraint firstItem="zWf-JM-5Ur" firstAttribute="top" secondItem="tai-bY-AML" secondAttribute="top" constant="1" id="WPJ-tm-2Rj"/>
-                                    <constraint firstAttribute="bottom" secondItem="zWf-JM-5Ur" secondAttribute="bottom" constant="1" id="yeb-KU-LEj"/>
+                                    <constraint firstAttribute="height" constant="285" id="5um-IG-SWu"/>
+                                    <constraint firstAttribute="width" constant="316" id="ZtW-3A-BjV"/>
                                 </constraints>
-                            </view>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="tai-bY-AML" secondAttribute="centerY" id="1IP-hb-VN6"/>
-                            <constraint firstAttribute="centerX" secondItem="tai-bY-AML" secondAttribute="centerX" id="ZcW-rs-RGS"/>
+                            <constraint firstAttribute="centerX" secondItem="QAI-ML-KrH" secondAttribute="centerX" id="Kve-nn-GYx"/>
+                            <constraint firstAttribute="centerY" secondItem="QAI-ML-KrH" secondAttribute="centerY" id="yLL-vy-Bid"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="2D Sketch" image="first" id="acW-dT-cKf"/>
@@ -105,6 +92,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="demosketch.png" width="600" height="560"/>
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>
