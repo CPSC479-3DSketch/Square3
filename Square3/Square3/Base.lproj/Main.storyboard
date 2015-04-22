@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7528.3" systemVersion="14D130a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6724" systemVersion="14E7f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7518.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -17,21 +17,80 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="demosketch.png" translatesAutoresizingMaskIntoConstraints="NO" id="QAI-ML-KrH">
-                                <rect key="frame" x="142" y="157" width="316" height="285"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OcV-wB-GSp">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TUJ-Zm-d7G">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z0J-ZR-tcG">
+                                <rect key="frame" x="549" y="20" width="35" height="35"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="285" id="5um-IG-SWu"/>
-                                    <constraint firstAttribute="width" constant="316" id="ZtW-3A-BjV"/>
+                                    <constraint firstAttribute="width" constant="35" id="Hej-Pg-Id0"/>
+                                    <constraint firstAttribute="height" constant="35" id="k7m-io-klS"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hue-spectrum" translatesAutoresizingMaskIntoConstraints="NO" id="oKL-oE-vnH" userLabel="Hue Spectrum">
+                                <rect key="frame" x="432" y="35" width="109" height="4"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="109" id="nsw-BD-Q1L"/>
+                                    <constraint firstAttribute="height" constant="4" id="w62-ZQ-qer"/>
                                 </constraints>
                             </imageView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="199" minValue="0.0" maxValue="359" translatesAutoresizingMaskIntoConstraints="NO" id="vu0-rl-BtB">
+                                <rect key="frame" x="430" y="21" width="113" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="9bB-Cp-tq0"/>
+                                    <constraint firstAttribute="width" constant="109" id="J0z-1F-W65"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="colorChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="A8x-hz-enQ"/>
+                                </connections>
+                            </slider>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="me0-68-JRz">
+                                <rect key="frame" x="16" y="20" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="LWf-7P-5w1"/>
+                                    <constraint firstAttribute="width" constant="46" id="wZa-VT-Ni5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="15"/>
+                                <state key="normal" title="Clear">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clear:" destination="9pv-A4-QxB" eventType="touchUpInside" id="BWJ-Db-4eq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="QAI-ML-KrH" secondAttribute="centerX" id="Kve-nn-GYx"/>
-                            <constraint firstAttribute="centerY" secondItem="QAI-ML-KrH" secondAttribute="centerY" id="yLL-vy-Bid"/>
+                            <constraint firstItem="me0-68-JRz" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="9CN-16-l18"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="OcV-wB-GSp" secondAttribute="trailing" constant="-16" id="9Vn-F9-R5m"/>
+                            <constraint firstItem="TUJ-Zm-d7G" firstAttribute="bottom" secondItem="tsR-hK-woN" secondAttribute="bottomMargin" id="A3f-zi-4KJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TUJ-Zm-d7G" secondAttribute="trailing" constant="-16" id="ARE-gR-UQZ"/>
+                            <constraint firstItem="OcV-wB-GSp" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="topMargin" id="Fct-9P-Cpf"/>
+                            <constraint firstItem="z0J-ZR-tcG" firstAttribute="leading" secondItem="vu0-rl-BtB" secondAttribute="trailing" constant="8" id="RSs-he-eh7"/>
+                            <constraint firstItem="OcV-wB-GSp" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-16" id="S6I-KY-LKk"/>
+                            <constraint firstItem="oKL-oE-vnH" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="15" id="Tp3-xh-Kdt"/>
+                            <constraint firstItem="TUJ-Zm-d7G" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="topMargin" id="UEn-9r-tQx"/>
+                            <constraint firstItem="vu0-rl-BtB" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="1" id="X6w-L8-Eb4"/>
+                            <constraint firstItem="z0J-ZR-tcG" firstAttribute="leading" secondItem="oKL-oE-vnH" secondAttribute="trailing" constant="8" id="YF6-Z2-acb"/>
+                            <constraint firstItem="z0J-ZR-tcG" firstAttribute="trailing" secondItem="tsR-hK-woN" secondAttribute="trailingMargin" id="YQt-kh-6h6"/>
+                            <constraint firstItem="me0-68-JRz" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="oye-J6-vXv"/>
+                            <constraint firstItem="OcV-wB-GSp" firstAttribute="bottom" secondItem="tsR-hK-woN" secondAttribute="bottomMargin" id="sBh-5Y-ioj"/>
+                            <constraint firstItem="z0J-ZR-tcG" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="vve-6G-9P7"/>
+                            <constraint firstItem="TUJ-Zm-d7G" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-16" id="wUo-p5-VLz"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="2D Sketch" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="2D Sketch" image="square" id="acW-dT-cKf"/>
+                    <connections>
+                        <outlet property="clearButton" destination="me0-68-JRz" id="X8b-8b-Vw4"/>
+                        <outlet property="colorSlider" destination="vu0-rl-BtB" id="IdU-gb-UyD"/>
+                        <outlet property="colorSwatch" destination="z0J-ZR-tcG" id="6Ip-CL-F0R"/>
+                        <outlet property="imageView" destination="OcV-wB-GSp" id="bxF-RO-6Er"/>
+                        <outlet property="tempImageView" destination="TUJ-Zm-d7G" id="gVS-j9-zlQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
@@ -62,7 +121,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="B8d-k7-nu5" secondAttribute="trailing" constant="-16" id="ioR-rc-Diu"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="3D Extrude" image="second" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="3D Extrude" image="cube" id="cPa-gy-q4n"/>
                     <connections>
                         <outlet property="sceneView" destination="B8d-k7-nu5" id="9v9-9x-dLZ"/>
                     </connections>
@@ -92,8 +151,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="demosketch.png" width="600" height="560"/>
-        <image name="first" width="30" height="30"/>
-        <image name="second" width="30" height="30"/>
+        <image name="cube" width="23" height="24"/>
+        <image name="hue-spectrum" width="2500" height="1"/>
+        <image name="square" width="23" height="23"/>
     </resources>
+    <color key="tintColor" red="0.0" green="0.68627450980392157" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

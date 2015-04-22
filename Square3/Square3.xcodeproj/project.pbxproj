@@ -12,9 +12,9 @@
 		4A7C75691AD3606F0085553E /* SketchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C75681AD3606F0085553E /* SketchViewController.swift */; };
 		4A7C756B1AD3606F0085553E /* ExtrudeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C756A1AD3606F0085553E /* ExtrudeViewController.swift */; };
 		4A7C756E1AD3606F0085553E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A7C756C1AD3606F0085553E /* Main.storyboard */; };
-		4A7C75701AD3606F0085553E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A7C756F1AD3606F0085553E /* Images.xcassets */; };
 		4A7C75731AD3606F0085553E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7C75711AD3606F0085553E /* LaunchScreen.xib */; };
 		4A7C757F1AD3606F0085553E /* Square3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C757E1AD3606F0085553E /* Square3Tests.swift */; };
+		4AB4F8201AE7448D0045D6C4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AB4F81F1AE7448D0045D6C4 /* Images.xcassets */; };
 		4AE0B6F01AD368B1002E6AF2 /* demosketch.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AE0B6EF1AD368B1002E6AF2 /* demosketch.png */; };
 /* End PBXBuildFile section */
 
@@ -36,11 +36,11 @@
 		4A7C75681AD3606F0085553E /* SketchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SketchViewController.swift; sourceTree = "<group>"; };
 		4A7C756A1AD3606F0085553E /* ExtrudeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtrudeViewController.swift; sourceTree = "<group>"; };
 		4A7C756D1AD3606F0085553E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4A7C756F1AD3606F0085553E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4A7C75721AD3606F0085553E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		4A7C75781AD3606F0085553E /* Square3Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Square3Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A7C757D1AD3606F0085553E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A7C757E1AD3606F0085553E /* Square3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square3Tests.swift; sourceTree = "<group>"; };
+		4AB4F81F1AE7448D0045D6C4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4AE0B6EF1AD368B1002E6AF2 /* demosketch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demosketch.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,8 +88,8 @@
 				4A7C756A1AD3606F0085553E /* ExtrudeViewController.swift */,
 				4A241BCE1ADDBA9400A688F8 /* Shape.swift */,
 				4A7C756C1AD3606F0085553E /* Main.storyboard */,
-				4A7C756F1AD3606F0085553E /* Images.xcassets */,
 				4A7C75711AD3606F0085553E /* LaunchScreen.xib */,
+				4AB4F81F1AE7448D0045D6C4 /* Images.xcassets */,
 				4A7C75641AD3606F0085553E /* Supporting Files */,
 			);
 			path = Square3;
@@ -203,9 +203,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AE0B6F01AD368B1002E6AF2 /* demosketch.png in Resources */,
+				4AB4F8201AE7448D0045D6C4 /* Images.xcassets in Resources */,
 				4A7C756E1AD3606F0085553E /* Main.storyboard in Resources */,
 				4A7C75731AD3606F0085553E /* LaunchScreen.xib in Resources */,
-				4A7C75701AD3606F0085553E /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
