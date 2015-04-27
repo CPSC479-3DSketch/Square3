@@ -8,7 +8,7 @@
         <!--2D Sketch-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController title="2D Sketch" id="9pv-A4-QxB" customClass="SketchViewController" customModule="Square3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="2D Sketch" id="9pv-A4-QxB" customClass="SketchViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
                         <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
@@ -45,7 +45,7 @@
                                     <constraint firstAttribute="width" constant="109" id="J0z-1F-W65"/>
                                 </constraints>
                                 <connections>
-                                    <action selector="colorChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="A8x-hz-enQ"/>
+                                    <action selector="colorChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="Ft9-Hz-JIN"/>
                                 </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="me0-68-JRz">
@@ -59,7 +59,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="clear:" destination="9pv-A4-QxB" eventType="touchUpInside" id="BWJ-Db-4eq"/>
+                                    <action selector="clearCanvas:" destination="9pv-A4-QxB" eventType="touchUpInside" id="S0C-q6-3SW"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -85,11 +85,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="2D Sketch" image="square" id="acW-dT-cKf"/>
                     <connections>
-                        <outlet property="clearButton" destination="me0-68-JRz" id="X8b-8b-Vw4"/>
-                        <outlet property="colorSlider" destination="vu0-rl-BtB" id="IdU-gb-UyD"/>
-                        <outlet property="colorSwatch" destination="z0J-ZR-tcG" id="6Ip-CL-F0R"/>
-                        <outlet property="imageView" destination="OcV-wB-GSp" id="bxF-RO-6Er"/>
-                        <outlet property="tempImageView" destination="TUJ-Zm-d7G" id="gVS-j9-zlQ"/>
+                        <outlet property="clearButton" destination="me0-68-JRz" id="ilI-0d-7EL"/>
+                        <outlet property="colorSlider" destination="vu0-rl-BtB" id="QO9-nz-PgT"/>
+                        <outlet property="colorSwatch" destination="z0J-ZR-tcG" id="Shv-iF-J8r"/>
+                        <outlet property="imageView" destination="OcV-wB-GSp" id="jTq-XQ-czk"/>
+                        <outlet property="tempImageView" destination="TUJ-Zm-d7G" id="ng6-mg-0Jt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -99,7 +99,7 @@
         <!--3D Extrude-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController title="3D Extrude" id="8rJ-Kc-sve" customClass="ExtrudeViewController" customModule="Square3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="3D Extrude" id="8rJ-Kc-sve" customClass="ExtrudeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
                         <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
@@ -123,7 +123,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="3D Extrude" image="cube" id="cPa-gy-q4n"/>
                     <connections>
-                        <outlet property="sceneView" destination="B8d-k7-nu5" id="9v9-9x-dLZ"/>
+                        <outlet property="sceneView" destination="B8d-k7-nu5" id="Dm7-hX-pyH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>

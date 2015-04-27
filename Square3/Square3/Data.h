@@ -7,13 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "Shape.h"
 
 @interface Data : NSObject
 
 @property NSMutableArray *shapes;
 
 + (id)sharedData;
-
+- (NSMutableArray *) fetchShapes;
+- (void) addShape: (Shape *)shape;
+- (void) loadDataFromDisk;
+- (void) saveDataToDisk;
 
 @end

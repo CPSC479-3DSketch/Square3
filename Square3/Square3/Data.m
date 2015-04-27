@@ -7,35 +7,32 @@
 //
 
 #import "Data.h"
-#import "Square3-Swift.h"
-
 
 @implementation Data
 
 + (id)sharedData {
-  static Data *sharedData = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    sharedData = [[self alloc] init];
-  });
-  return sharedData;
+    static Data *sharedData = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedData = [[self alloc] init];
+    });
+    return sharedData;
 }
 
-+ (NSMutableArray *) shapes{
-  return self.shapes;
+- (NSMutableArray *) fetchShapes{
+    return self.shapes;
 }
 
-+ (void) addShape: (Shape *) shape{
-  [self.shapes addObject:shape];
+- (void) addShape: (id) shape{
+    [self.shapes addObject:(Shape *)shape];
 }
 
-+ (void) loadDataFromDisk{
-  
+- (void) loadDataFromDisk{
+    
 }
 
-+ (void) saveDataToDisk{
-  
+- (void) saveDataToDisk{
+    
 }
-
 
 @end
