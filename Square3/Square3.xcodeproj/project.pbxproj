@@ -16,6 +16,7 @@
 		4A7C75731AD3606F0085553E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7C75711AD3606F0085553E /* LaunchScreen.xib */; };
 		4A7C757F1AD3606F0085553E /* Square3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C757E1AD3606F0085553E /* Square3Tests.swift */; };
 		4AE0B6F01AD368B1002E6AF2 /* demosketch.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AE0B6EF1AD368B1002E6AF2 /* demosketch.png */; };
+		5A2B17341AEEACB50052576B /* Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2B17331AEEACB50052576B /* Data.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,9 @@
 		4A7C757D1AD3606F0085553E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A7C757E1AD3606F0085553E /* Square3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square3Tests.swift; sourceTree = "<group>"; };
 		4AE0B6EF1AD368B1002E6AF2 /* demosketch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demosketch.png; sourceTree = "<group>"; };
+		5A2B17301AEEACA20052576B /* Square3-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Square3-Bridging-Header.h"; sourceTree = "<group>"; };
+		5A2B17321AEEACB50052576B /* Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
+		5A2B17331AEEACB50052576B /* Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Data.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,9 @@
 		4A7C75631AD3606F0085553E /* Square3 */ = {
 			isa = PBXGroup;
 			children = (
+				5A2B17321AEEACB50052576B /* Data.h */,
+				5A2B17331AEEACB50052576B /* Data.m */,
+				5A2B17301AEEACA20052576B /* Square3-Bridging-Header.h */,
 				4A7C75661AD3606F0085553E /* AppDelegate.swift */,
 				4A7C75681AD3606F0085553E /* SketchViewController.swift */,
 				4A7C756A1AD3606F0085553E /* ExtrudeViewController.swift */,
@@ -170,7 +177,6 @@
 				TargetAttributes = {
 					4A7C75601AD3606F0085553E = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = B5TXHQBF3Z;
 					};
 					4A7C75771AD3606F0085553E = {
 						CreatedOnToolsVersion = 6.3;
@@ -223,6 +229,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A2B17341AEEACB50052576B /* Data.m in Sources */,
 				4A7C756B1AD3606F0085553E /* ExtrudeViewController.swift in Sources */,
 				4A7C75671AD3606F0085553E /* AppDelegate.swift in Sources */,
 				4A7C75691AD3606F0085553E /* SketchViewController.swift in Sources */,
@@ -355,11 +362,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Square3/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Square3/Square3-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -367,11 +379,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Square3/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Square3/Square3-Bridging-Header.h";
 			};
 			name = Release;
 		};
