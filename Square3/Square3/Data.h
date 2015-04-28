@@ -12,10 +12,13 @@
 @interface Data : NSObject
 
 @property NSMutableArray *shapes;
+@property float screenWidth;
+@property float screenHeight;
 
 + (id)sharedData;
 - (NSMutableArray *) fetchShapes;
 - (void) addShape: (Shape *)shape;
+- (void) clearShapes;
 - (void) loadDataFromDisk;
 - (void) saveDataToDisk;
 

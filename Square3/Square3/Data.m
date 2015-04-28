@@ -19,12 +19,23 @@
     return sharedData;
 }
 
-- (NSMutableArray *) fetchShapes{
+-(id)init{
+    if (self = [super init])
+        self.shapes = [[NSMutableArray alloc] init];
+    
+    return self;
+}
+
+- (NSMutableArray *)fetchShapes {
     return self.shapes;
 }
 
-- (void) addShape: (id) shape{
-    [self.shapes addObject:(Shape *)shape];
+- (void) clearShapes {
+    [self.shapes removeAllObjects];
+}
+
+- (void) addShape:(Shape *)shape {
+    [self.shapes addObject:shape];
 }
 
 - (void) loadDataFromDisk{

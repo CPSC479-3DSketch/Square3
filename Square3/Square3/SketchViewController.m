@@ -34,6 +34,14 @@
     [self.colorSwatch setBackgroundColor:self.drawingColor];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // store the height and width of the canvas for use later
+    [(Data *)[Data sharedData] setScreenHeight:self.imageView.frame.size.height];
+    [(Data *)[Data sharedData] setScreenWidth:self.imageView.frame.size.width];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -54,10 +62,10 @@
     UITouch *touch = (UITouch *)[[touches allObjects] firstObject];
     
     // Draw the strokes on the tempImageView
-    UIGraphicsBeginImageContext(self.view.frame.size);
+    UIGraphicsBeginImageContextWithOptions(self.imageView.frame.size, NO, 0.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    [self.tempImageView.image drawInRect:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.tempImageView.image drawInRect:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height)];
     
     CGPoint lastPoint = [((NSValue *)self.shapeInProgress.sketchyRepresentation.lastObject) CGPointValue];
     CGContextMoveToPoint(context, lastPoint.x, lastPoint.y);
@@ -89,9 +97,9 @@
     
     // Merge tempImageView into mainImageView
     // Modified from http://www.raywenderlich.com/87899/make-simple-drawing-app-uikit-swift
-    UIGraphicsBeginImageContext(self.imageView.frame.size);
-    [self.imageView.image drawInRect:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
-    [self.tempImageView.image drawInRect:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+    UIGraphicsBeginImageContextWithOptions(self.imageView.frame.size, NO, 0.0f);
+    [self.imageView.image drawInRect:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+    [self.tempImageView.image drawInRect:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
 
     [self.imageView setImage:UIGraphicsGetImageFromCurrentImageContext()];
     UIGraphicsEndImageContext();
@@ -113,6 +121,7 @@
     [self.tempImageView setImage:nil];
     [self.imageView setImage:nil];
     
+    [[Data sharedData] clearShapes];
 }
 
 - (IBAction)colorChanged:(id)sender {
