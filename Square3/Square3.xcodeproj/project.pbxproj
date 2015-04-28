@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		366AE5D41AEEDB550031118F /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 366AE5D31AEEDB550031118F /* opencv2.framework */; };
+		366AE5D71AEEDD840031118F /* CV.mm in Sources */ = {isa = PBXBuildFile; fileRef = 366AE5D61AEEDD840031118F /* CV.mm */; };
+		366AE5D91AEEE4C00031118F /* shapesTest.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 366AE5D81AEEE4C00031118F /* shapesTest.jpg */; };
+		366AE5DB1AEEE8C70031118F /* nihil.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 366AE5DA1AEEE8C70031118F /* nihil.jpg */; };
+		366AE5DD1AEEE9020031118F /* iamuhsquare.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 366AE5DC1AEEE9020031118F /* iamuhsquare.jpg */; };
+		366AE5DF1AEEE97C0031118F /* squareplus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 366AE5DE1AEEE97C0031118F /* squareplus.jpg */; };
+		366AE5E11AEEE9E80031118F /* csh.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 366AE5E01AEEE9E80031118F /* csh.jpg */; };
+		366AE5E31AEEEB0A0031118F /* t.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 366AE5E21AEEEB0A0031118F /* t.jpeg */; };
+		366AE5E51AEEEB8D0031118F /* ts.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 366AE5E41AEEEB8C0031118F /* ts.jpeg */; };
 		4AABFA0D1AEEBF610002817B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AABFA0C1AEEBF610002817B /* main.m */; };
 		4AABFA101AEEBF610002817B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AABFA0F1AEEBF610002817B /* AppDelegate.m */; };
 		4AABFA131AEEBF610002817B /* SketchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AABFA121AEEBF610002817B /* SketchViewController.m */; };
@@ -30,6 +39,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		366AE5D31AEEDB550031118F /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		366AE5D51AEEDD840031118F /* CV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CV.h; sourceTree = "<group>"; };
+		366AE5D61AEEDD840031118F /* CV.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CV.mm; sourceTree = "<group>"; };
+		366AE5D81AEEE4C00031118F /* shapesTest.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = shapesTest.jpg; sourceTree = "<group>"; };
+		366AE5DA1AEEE8C70031118F /* nihil.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nihil.jpg; sourceTree = "<group>"; };
+		366AE5DC1AEEE9020031118F /* iamuhsquare.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iamuhsquare.jpg; sourceTree = "<group>"; };
+		366AE5DE1AEEE97C0031118F /* squareplus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = squareplus.jpg; sourceTree = "<group>"; };
+		366AE5E01AEEE9E80031118F /* csh.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = csh.jpg; sourceTree = "<group>"; };
+		366AE5E21AEEEB0A0031118F /* t.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = t.jpeg; sourceTree = "<group>"; };
+		366AE5E41AEEEB8C0031118F /* ts.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ts.jpeg; sourceTree = "<group>"; };
 		4AABFA071AEEBF610002817B /* Square3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Square3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AABFA0B1AEEBF610002817B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4AABFA0C1AEEBF610002817B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -56,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				366AE5D41AEEDB550031118F /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +95,7 @@
 				4AABFA091AEEBF610002817B /* Square3 */,
 				4AABFA261AEEBF620002817B /* Square3Tests */,
 				4AABFA081AEEBF610002817B /* Products */,
+				366AE5D31AEEDB550031118F /* opencv2.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,6 +119,8 @@
 				4AABFA3B1AEEC1D50002817B /* Data.m */,
 				4AABFA111AEEBF610002817B /* SketchViewController.h */,
 				4AABFA121AEEBF610002817B /* SketchViewController.m */,
+				366AE5D51AEEDD840031118F /* CV.h */,
+				366AE5D61AEEDD840031118F /* CV.mm */,
 				4AABFA141AEEBF610002817B /* ExtrudeViewController.h */,
 				4AABFA151AEEBF610002817B /* ExtrudeViewController.m */,
 				4AABFA331AEEBFA40002817B /* LaunchScreen.xib */,
@@ -111,6 +134,13 @@
 		4AABFA0A1AEEBF610002817B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				366AE5E41AEEEB8C0031118F /* ts.jpeg */,
+				366AE5E21AEEEB0A0031118F /* t.jpeg */,
+				366AE5E01AEEE9E80031118F /* csh.jpg */,
+				366AE5DE1AEEE97C0031118F /* squareplus.jpg */,
+				366AE5DC1AEEE9020031118F /* iamuhsquare.jpg */,
+				366AE5DA1AEEE8C70031118F /* nihil.jpg */,
+				366AE5D81AEEE4C00031118F /* shapesTest.jpg */,
 				4AABFA0B1AEEBF610002817B /* Info.plist */,
 				4AABFA0C1AEEBF610002817B /* main.m */,
 			);
@@ -215,7 +245,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AABFA361AEEBFA40002817B /* Main.storyboard in Resources */,
+				366AE5DB1AEEE8C70031118F /* nihil.jpg in Resources */,
+				366AE5E31AEEEB0A0031118F /* t.jpeg in Resources */,
 				4AABFA351AEEBFA40002817B /* LaunchScreen.xib in Resources */,
+				366AE5E51AEEEB8D0031118F /* ts.jpeg in Resources */,
+				366AE5D91AEEE4C00031118F /* shapesTest.jpg in Resources */,
+				366AE5E11AEEE9E80031118F /* csh.jpg in Resources */,
+				366AE5DF1AEEE97C0031118F /* squareplus.jpg in Resources */,
+				366AE5DD1AEEE9020031118F /* iamuhsquare.jpg in Resources */,
 				4AABFA1B1AEEBF610002817B /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,6 +275,7 @@
 				4AABFA101AEEBF610002817B /* AppDelegate.m in Sources */,
 				4AABFA391AEEC0850002817B /* Shape.m in Sources */,
 				4AABFA131AEEBF610002817B /* SketchViewController.m in Sources */,
+				366AE5D71AEEDD840031118F /* CV.mm in Sources */,
 				4AABFA0D1AEEBF610002817B /* main.m in Sources */,
 				4AABFA3C1AEEC1D50002817B /* Data.m in Sources */,
 			);
@@ -348,7 +386,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Square3/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -358,7 +401,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Square3/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -377,6 +425,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Square3Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Square3.app/Square3";
@@ -392,6 +441,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Square3Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Square3.app/Square3";
@@ -417,6 +467,7 @@
 				4AABFA2F1AEEBF620002817B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4AABFA301AEEBF620002817B /* Build configuration list for PBXNativeTarget "Square3Tests" */ = {
 			isa = XCConfigurationList;
@@ -425,6 +476,7 @@
 				4AABFA321AEEBF620002817B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

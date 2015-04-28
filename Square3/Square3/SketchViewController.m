@@ -6,6 +6,8 @@
 //
 
 #import "SketchViewController.h"
+#import "Shape.h"
+#import "CV.h"
 
 @interface SketchViewController ()
 
@@ -13,8 +15,11 @@
 
 @implementation SketchViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     
     // Make the slider blank
     [self.colorSlider setMaximumTrackImage:[[UIImage alloc] init] forState:UIControlStateNormal];
@@ -95,6 +100,7 @@
 
     Shape *shapeToAdd = self.shapeInProgress;
     if (shapeToAdd) { // ensure it's not nil
+        [CV generateExactRepresentation:shapeToAdd];
         [[Data sharedData] addShape:shapeToAdd];
     }
 
