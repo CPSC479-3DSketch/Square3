@@ -179,7 +179,6 @@
             
             if (((SCNShape *)self.extrudingNode.geometry).extrusionDepth > 0.0 || delY < 0) {
                 ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
-                NSLog(@"%f", ((SCNShape *)self.extrudingNode.geometry).extrusionDepth);
                 [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
             }
             
