@@ -220,8 +220,6 @@
         ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
         [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
       }
-      
-      
       self.prevPosition = newPosition;
     }
 }
