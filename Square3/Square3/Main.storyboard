@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C2055" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--2D Sketch-->
@@ -118,25 +117,8 @@
                                     <outletCollection property="gestureRecognizers" destination="S9I-Sm-zkf" appends="YES" id="TaG-vq-U0e"/>
                                 </connections>
                             </sceneKitView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0u-Jt-3en">
-                                <rect key="frame" x="16" y="20" width="69" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="OnT-cU-yIq"/>
-                                    <constraint firstAttribute="width" constant="69" id="aDw-IX-aDZ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="15"/>
-                                <state key="normal" title="Extrude">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="selected">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="extrudePressed:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="65L-oS-EwX"/>
-                                </connections>
-                            </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hvp-zB-XUA">
-                                <rect key="frame" x="239" y="28" width="123" height="29"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hvp-zB-XUA">
+                                <rect key="frame" x="237" y="28" width="127" height="29"/>
                                 <segments>
                                     <segment title="Sketchy"/>
                                     <segment title="Exact"/>
@@ -147,13 +129,9 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="B8d-k7-nu5" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="1Zs-Ji-bb2"/>
-                            <constraint firstItem="e0u-Jt-3en" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="4sz-Jb-gZ3"/>
-                            <constraint firstItem="e0u-Jt-3en" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" id="BnZ-3P-QAW"/>
                             <constraint firstItem="B8d-k7-nu5" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="top" id="YzR-4J-cmX"/>
                             <constraint firstAttribute="centerX" secondItem="Hvp-zB-XUA" secondAttribute="centerX" id="beg-nB-zna"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="B8d-k7-nu5" secondAttribute="bottom" id="f6L-wH-iXg"/>
-                            <constraint firstItem="e0u-Jt-3en" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="gmU-dg-Rdg"/>
-                            <constraint firstItem="e0u-Jt-3en" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" constant="16" id="hOm-Dt-UFY"/>
                             <constraint firstAttribute="trailing" secondItem="B8d-k7-nu5" secondAttribute="trailing" id="jF8-hq-fO3"/>
                             <constraint firstItem="Hvp-zB-XUA" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="8" id="mAP-oE-6ay"/>
                         </constraints>
@@ -161,7 +139,6 @@
                     <tabBarItem key="tabBarItem" title="3D Extrude" image="cube" id="cPa-gy-q4n"/>
                     <connections>
                         <outlet property="sceneView" destination="B8d-k7-nu5" id="Dm7-hX-pyH"/>
-                        <outlet property="tempExtrudeButton" destination="e0u-Jt-3en" id="1iA-WA-bEq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
@@ -175,7 +152,7 @@
                         <action selector="didPinch:" destination="8rJ-Kc-sve" id="ABi-8E-kKs"/>
                     </connections>
                 </pinchGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="2" maximumNumberOfTouches="2" id="S9I-Sm-zkf" userLabel="2-Finger Pan GR">
+                <panGestureRecognizer minimumNumberOfTouches="3" maximumNumberOfTouches="3" id="S9I-Sm-zkf" userLabel="2-Finger Pan GR">
                     <connections>
                         <action selector="did2FingerPan:" destination="8rJ-Kc-sve" id="YTi-MY-FqN"/>
                     </connections>

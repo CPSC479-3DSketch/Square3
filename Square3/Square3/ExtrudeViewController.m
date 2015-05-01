@@ -11,10 +11,17 @@
 
 @end
 
-@implementation ExtrudeViewController
+@implementation ExtrudeViewController 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  
+  self.extrudeGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(did2FingerPan:)];
+  
+  self.extrudeGestureRecognizer.minimumNumberOfTouches = 2;
+  self.extrudeGestureRecognizer.maximumNumberOfTouches = 2;
+  [self.view addGestureRecognizer: self.extrudeGestureRecognizer];
+  
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -29,10 +36,9 @@
     [super viewDidAppear:animated];
     
     // animate the 2D "wall" becoming the "floor"
-    // delay 1 second
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.75 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [SCNTransaction begin];
-        [SCNTransaction setAnimationDuration:2];
+        [SCNTransaction setAnimationDuration:1];
         [self.cameraSphere setPosition:SCNVector3Make(0.0, 0.0, self.cameraSphere.position.z + 100)];
         [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x + M_PI_4, self.cameraSphere.eulerAngles.y - 0, self.cameraSphere.eulerAngles.z)];
         [SCNTransaction commit];
@@ -158,55 +164,26 @@
 
 // MARK: Camera Control (and temporary extrusion)
 - (IBAction)did1FingerPan:(UIPanGestureRecognizer *)sender {
-    
-    if (self.tempExtrudeButton.selected) {  // handle extrusion temporarily
-        // TODO: Remove this once we get multitouch working
-        if (sender.state == UIGestureRecognizerStateBegan) {
-            self.prevPosition = [sender translationInView:self.sceneView];
-            NSArray *hits = [self.sceneView hitTest:[sender locationInView:self.sceneView] options:nil];
-            if ([hits count] > 0) {
-                for (SCNHitTestResult *hit in hits) {
-                    if ([hit node] != self.floor && [hit node] != self.camera && [hit node] != self.cameraSphere) {
-                        self.extrudingNode = [hit node];
-                        break;
-                    }
-                }
-            }
-        } else if (sender.state == UIGestureRecognizerStateChanged) {
-            CGPoint newPosition = [sender translationInView:self.sceneView];
-            float delY = newPosition.y - self.prevPosition.y;
-            
-            
-            if (((SCNShape *)self.extrudingNode.geometry).extrusionDepth > 0.0 || delY < 0) {
-                ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
-                [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
-            }
-            
-            
-            self.prevPosition = newPosition;
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        self.prevPosition = [sender translationInView:self.sceneView];
+    } else if (sender.state == UIGestureRecognizerStateChanged) {
+        CGPoint newPosition = [sender translationInView:self.sceneView];
+        float delX = newPosition.x - self.prevPosition.x;
+        float delY = newPosition.y - self.prevPosition.y;
+        
+        if (self.cameraSphere.eulerAngles.x > -0.05 && delY < 0) { // too low
+            [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x, self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
+        } else if (self.cameraSphere.eulerAngles.x < -(M_PI_2) && delY > 0) {
+            [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x, self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
+        } else {
+            [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x - (delY / 200), self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
         }
-    } else {
-        if (sender.state == UIGestureRecognizerStateBegan) {
-            self.prevPosition = [sender translationInView:self.sceneView];
-        } else if (sender.state == UIGestureRecognizerStateChanged) {
-            CGPoint newPosition = [sender translationInView:self.sceneView];
-            float delX = newPosition.x - self.prevPosition.x;
-            float delY = newPosition.y - self.prevPosition.y;
-            
-            if (self.cameraSphere.eulerAngles.x > -0.05 && delY < 0) { // too low
-                [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x, self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
-            } else if (self.cameraSphere.eulerAngles.x < -(M_PI_2) && delY > 0) {
-                [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x, self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
-            } else {
-                [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x - (delY / 200), self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
-            }
-            
-            self.prevPosition = newPosition;
-        }
+        
+        self.prevPosition = newPosition;
     }
-    
-    
 }
+
+
 
 - (IBAction)didPinch:(UIPinchGestureRecognizer *)sender {
     
@@ -226,27 +203,27 @@
 
 // MARK: Extrusion
 - (IBAction)did2FingerPan:(UIPanGestureRecognizer *)sender {
-    
-    // FIXME: This isn't working yet. translationInView is returning nil
-    // for some reason
-    
-//    if (sender.state == UIGestureRecognizerStateBegan) {
-//        self.prevPosition = [sender translationInView:self.sceneView];
-//        NSArray *hits = [self.sceneView hitTest:[sender locationInView:self.sceneView] options:nil];
-//        if ([hits count] > 0) {
-//            self.extrudingNode = [((SCNHitTestResult *)hits.firstObject) node];
-//        }
-//    } else if (sender.state == UIGestureRecognizerStateChanged) {
-//        CGPoint newPosition = [sender translationInView:self.sceneView];
-//        float delY = newPosition.y - self.prevPosition.y;
-//        
-//        if ([self.extrudingNode isKindOfClass:[SCNShape class]]) {
-//            ((SCNShape *)self.extrudingNode).extrusionDepth += delY;
-//            [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z + (delY / 2))];
-//        }
-//        
-//        self.prevPosition = newPosition;
-//    }
+  
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"-----> Extrude Gesture");
+        self.prevPosition = [sender translationInView:self.sceneView];
+        NSArray *hits = [self.sceneView hitTest:[sender locationInView:self.sceneView] options:nil];
+        if ([hits count] > 0) {
+            self.extrudingNode = [((SCNHitTestResult *)hits.firstObject) node];
+        }
+    } else if (sender.state == UIGestureRecognizerStateChanged) {
+      CGPoint newPosition = [sender translationInView:self.sceneView];
+      float delY = newPosition.y - self.prevPosition.y;
+      
+      
+      if (((SCNShape *)self.extrudingNode.geometry).extrusionDepth - delY > 0.0 || delY < 0) {
+        ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
+        [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
+      }
+      
+      
+      self.prevPosition = newPosition;
+    }
 }
 
 
