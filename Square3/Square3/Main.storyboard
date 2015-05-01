@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6724" systemVersion="14E7f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C2055" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--2D Sketch-->
@@ -134,16 +135,27 @@
                                     <action selector="extrudePressed:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="65L-oS-EwX"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hvp-zB-XUA">
+                                <rect key="frame" x="239" y="28" width="123" height="29"/>
+                                <segments>
+                                    <segment title="Sketchy"/>
+                                    <segment title="Exact"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="B8d-k7-nu5" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="1Zs-Ji-bb2"/>
+                            <constraint firstItem="e0u-Jt-3en" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="4sz-Jb-gZ3"/>
+                            <constraint firstItem="e0u-Jt-3en" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" id="BnZ-3P-QAW"/>
                             <constraint firstItem="B8d-k7-nu5" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="top" id="YzR-4J-cmX"/>
+                            <constraint firstAttribute="centerX" secondItem="Hvp-zB-XUA" secondAttribute="centerX" id="beg-nB-zna"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="B8d-k7-nu5" secondAttribute="bottom" id="f6L-wH-iXg"/>
                             <constraint firstItem="e0u-Jt-3en" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="gmU-dg-Rdg"/>
                             <constraint firstItem="e0u-Jt-3en" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" constant="16" id="hOm-Dt-UFY"/>
                             <constraint firstAttribute="trailing" secondItem="B8d-k7-nu5" secondAttribute="trailing" id="jF8-hq-fO3"/>
+                            <constraint firstItem="Hvp-zB-XUA" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="8" id="mAP-oE-6ay"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="3D Extrude" image="cube" id="cPa-gy-q4n"/>
