@@ -124,6 +124,7 @@
     if (std::fabs(cv::contourArea(contour)) < 100)
         return;
     NSLog(@"-----> Polygon has %ld corners", polygonApproximation.size());
+    shape.exactRepresentation = [[NSMutableArray alloc] init];
     for(int j = 0; j < polygonApproximation.size(); j++) {
         NSLog(@"       (%d, %d)", polygonApproximation[j].x, polygonApproximation[j].y);
         CGPoint point;
@@ -132,7 +133,55 @@
         [shape.exactRepresentation addObject:[NSValue valueWithCGPoint:point]];
 //        [shape setShapeName: polygonApproximation.size() > 12 ? 365 : polygonApproximation.size()];
     }
+    
+    int threshold = (int) contour.size()*.05 <= 2 ? 3 : (int) contour.size()*.05;
+    
+    NSLog(@"-----> Threshold = %d.", threshold);
+    if(polygonApproximation.size() > 0) {
+        int polygonIndex = 0;
+        int lastCornerMatch = -1;
+        for(int i = 0; i < contour.size(); i++) {
+            if(polygonApproximation[polygonIndex].x == contour[i].x &&
+               polygonApproximation[polygonIndex].y == contour[i].y) {
+                if(lastCornerMatch == -1 && i > threshold) {
+                    CGPoint start;
+                    start.x = contour[i/2].x;
+                    start.y = contour[i/2].y;
+                    [shape.exactRepresentation insertObject:[NSValue valueWithCGPoint:start] atIndex:polygonIndex++];
+                    NSLog(@"-----> Here, added start to representation.");
+                }
+                
+                if(i - lastCornerMatch > threshold) {
+                    CGPoint newCorner;
+                    newCorner.x = contour[i/2].x;
+                    newCorner.y = contour[i/2].y;
+                    [shape.exactRepresentation insertObject:[NSValue valueWithCGPoint:newCorner] atIndex:polygonIndex];
+                    NSLog(@"-----> Here, added new corner at index %d.", polygonIndex);
+                    polygonIndex++;
+                }
+                
+                lastCornerMatch = i;
+                polygonIndex++;
+            }
+        }
+        
+        if(contour.size() - lastCornerMatch > threshold) {
+            CGPoint end;
+            end.x = contour[contour.size()-1].x;
+            end.y = contour[contour.size()-1].y;
+            
+            [shape.exactRepresentation addObject:[NSValue valueWithCGPoint:end]];
+            NSLog(@"-----> Here, added end to representation.");
+        }
+        
+         NSLog(@"-----> Polygon has %ld corners", (unsigned long)shape.exactRepresentation.count);
+        for(int i = 0; i < shape.exactRepresentation.count; i++) {
+             NSLog(@"      %@", shape.exactRepresentation[i]);
+        }
+        
+    }
 }
+
 
 + (void)findShapesInContours: (std::vector<std::vector<cv::Point>>) contours {
     NSLog(@"%ld", contours.size());
