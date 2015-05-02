@@ -9,7 +9,7 @@
 #import "Data.h"
 @import SceneKit;
 
-@interface ExtrudeViewController : UIViewController <UIScrollViewDelegate>
+@interface ExtrudeViewController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet SCNView *sceneView;
 @property SCNScene *scene;
@@ -24,8 +24,12 @@
 // node currently being extruded
 @property SCNNode *extrudingNode;
 
-// temporary button to allow extrusion
-@property (weak, nonatomic) IBOutlet UIButton *tempExtrudeButton;
+// gesture recognizer for gesture-based extrusion
+@property UIPanGestureRecognizer *extrudeGestureRecognizer;
+
+// segmented control
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+
 
 @end
 
