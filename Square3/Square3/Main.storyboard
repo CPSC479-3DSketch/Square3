@@ -139,6 +139,7 @@
                     <tabBarItem key="tabBarItem" title="3D Extrude" image="cube" id="cPa-gy-q4n"/>
                     <connections>
                         <outlet property="sceneView" destination="B8d-k7-nu5" id="Dm7-hX-pyH"/>
+                        <outlet property="segmentedControl" destination="Hvp-zB-XUA" id="dSa-jA-JgC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>

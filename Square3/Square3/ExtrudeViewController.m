@@ -16,6 +16,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   
+  // Segmented Control
+  [self.segmentedControl addTarget:self
+                              action:@selector(switchRepresentationMode:)
+                    forControlEvents:UIControlEventValueChanged];
+
+  
+  // Extrusion gesture recognizer
   self.extrudeGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(did2FingerPan:)];
   
   self.extrudeGestureRecognizer.minimumNumberOfTouches = 2;
@@ -225,8 +232,17 @@
 }
 
 
-- (IBAction)extrudePressed:(UIButton *)sender {
-    sender.selected = !sender.selected;
+- (void) switchRepresentationMode: (UISegmentedControl *)segmentedControl{
+  NSLog(@"-----> Segmented Control Pressed");
+  switch (segmentedControl.selectedSegmentIndex) {
+    case 0:
+      NSLog(@"       Sketchy selected");
+      break;
+    case 1:
+      NSLog(@"       Exact selected");
+    default:
+      break;
+  }
 }
 
 

@@ -27,5 +27,9 @@
 // gesture recognizer for gesture-based extrusion
 @property UIPanGestureRecognizer *extrudeGestureRecognizer;
 
+// segmented control
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+
+
 @end
 
