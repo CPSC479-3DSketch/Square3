@@ -10,4 +10,8 @@
 
 @implementation Shape
 
+- (NSArray *)preferredRepresentation {
+    return self.showExactRepresentation ? self.exactRepresentation : self.sketchyRepresentation;
+}
+
 @end

@@ -18,6 +18,7 @@ typedef enum { Triangle = 3, Rectangle = 4, Pentagon = 5, Hexagon = 6, Heptagon 
 // cannot be determined.
 @property NSMutableArray *sketchyRepresentation;
 @property NSMutableArray *exactRepresentation;
+@property (readonly) NSArray *preferredRepresentation;
 @property ShapeType shapeName;
 
 // A boolean to determine whether the user wants to view her original sketch
@@ -26,6 +27,9 @@ typedef enum { Triangle = 3, Rectangle = 4, Pentagon = 5, Hexagon = 6, Heptagon 
 
 // the shape's color, since this is super easy to add.
 @property UIColor *color;
+
+// Property to capture the depth of the extrusion
+@property CGFloat extrusionDepth;
 
 // TODO: Make use of this
 // The path of extrusion. For now, this should be a single-element array or nil

@@ -26,6 +26,7 @@
 
 // node currently being extruded
 @property SCNNode *extrudingNode;
+@property CGFloat currentExtrusionDepth;
 
 // gesture recognizer for gesture-based extrusion
 @property UIPanGestureRecognizer *extrudeGestureRecognizer;

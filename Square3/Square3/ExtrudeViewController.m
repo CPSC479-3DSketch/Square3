@@ -16,11 +16,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
-    // Segmented Control
-    [self.segmentedControl addTarget:self
-                              action:@selector(switchRepresentationMode:)
-                    forControlEvents:UIControlEventValueChanged];
 
     // Extrusion gesture recognizer
     self.extrudeGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(did2FingerPan:)];
@@ -108,6 +103,9 @@
 
 - (void)drawFlatShapes {
     
+    self.wireframeNodes = [[NSMutableArray alloc] init];
+    self.shapeNodes = [[NSMutableArray alloc] init];
+    
     // draw a Plane that will represent the floor
     SCNGeometry *floorGeom = [SCNPlane planeWithWidth:[(Data *)[Data sharedData] screenWidth] height:[(Data *)[Data sharedData] screenHeight]];
     [floorGeom.firstMaterial.diffuse setContents:[UIColor whiteColor]];
@@ -116,14 +114,14 @@
     for (Shape *shape in self.shapes) {
         UIBezierPath *path = [[UIBezierPath alloc] init];
         
-        NSValue *firstValue = [shape.sketchyRepresentation firstObject];
+        NSValue *firstValue = [shape.preferredRepresentation firstObject];
         CGPoint firstPoint = [firstValue CGPointValue];
         
         CGPoint flippedStart = CGPointMake(firstPoint.x, [(Data *)[Data sharedData] screenHeight] - firstPoint.y);
         [path moveToPoint:flippedStart];
         
-        for (int i = 1; i < shape.sketchyRepresentation.count; i++) {
-            NSValue *val = [shape.sketchyRepresentation objectAtIndex:i];
+        for (int i = 1; i < shape.preferredRepresentation.count; i++) {
+            NSValue *val = [shape.preferredRepresentation objectAtIndex:i];
             CGPoint point = [val CGPointValue];
             
             // translate the coordinate system
@@ -149,6 +147,9 @@
             
             // add the shape to the floor
             [self.floor addChildNode:shapeToAdd];
+            
+            // add the shape to the array
+            [self.shapeNodes addObject:shapeToAdd];
         } else {
             // color the shape white
             [geom.firstMaterial.diffuse setContents:[UIColor whiteColor]];
@@ -166,7 +167,7 @@
 
             // make the sketchy wireframe
             glLineWidth(2.0);
-            SCNGeometry *wireframeGeometry = [self createWireframeShapeFromPoints:shape.sketchyRepresentation withExtrusion:1.0];
+            SCNGeometry *wireframeGeometry = [self createWireframeShapeFromPoints:shape.preferredRepresentation withExtrusion:1.0];
             SCNNode *wireframeToAdd = [SCNNode nodeWithGeometry:wireframeGeometry];
             
             // offset the node so the coordinates start in the bottom right of the "floor"
@@ -332,8 +333,9 @@
             Shape *s = [self.shapes objectAtIndex:index];
             SCNNode *n = [self.wireframeNodes objectAtIndex:index];
             
-            [n setGeometry:[self createWireframeShapeFromPoints:s.sketchyRepresentation withExtrusion:((SCNShape *)self.extrudingNode.geometry).extrusionDepth]];
+            [n setGeometry:[self createWireframeShapeFromPoints:s.preferredRepresentation withExtrusion:((SCNShape *)self.extrudingNode.geometry).extrusionDepth]];
             
+            self.currentExtrusionDepth -= delY;
             self.prevPosition = newPosition;
         } else {
             CGPoint newPosition = [sender translationInView:self.sceneView];
@@ -344,26 +346,29 @@
                 ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
                 [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
             }
+            self.currentExtrusionDepth -= delY;
             self.prevPosition = newPosition;
         }
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        NSInteger index = [self.shapeNodes indexOfObject:self.extrudingNode];
+        Shape *s = [[[Data sharedData] fetchShapes] objectAtIndex:index];
+        s.extrusionDepth = self.currentExtrusionDepth;
     }
 }
 
 
-- (void) switchRepresentationMode: (UISegmentedControl *)segmentedControl{
-  NSLog(@"-----> Segmented Control Pressed");
-  switch (segmentedControl.selectedSegmentIndex) {
-    case 0:
-      NSLog(@"       Sketchy selected");
-          self.sketchyRendering = YES;
-      break;
-    case 1:
-      NSLog(@"       Exact selected");
-          self.sketchyRendering = NO;
-    default:
-      break;
-  }
+- (IBAction)representationMethodChanged:(UISegmentedControl *)sender {
+    
+    // clear the stage
+    for (SCNNode *n in self.floor.childNodes) {
+        [n removeFromParentNode];
+    }
+    
+    // redraw
+    self.sketchyRendering = (sender.selectedSegmentIndex == 0);
+    [self drawFlatShapes];
 }
+
 
 
 @end

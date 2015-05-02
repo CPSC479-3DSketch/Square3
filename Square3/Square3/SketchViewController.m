@@ -95,6 +95,8 @@
     
     [self.shapeInProgress.sketchyRepresentation addObject:[NSValue valueWithCGPoint:currentPoint]];
     
+    [self.shapeInProgress setExtrusionDepth:1.0];
+    
     // Merge tempImageView into mainImageView
     // Modified from http://www.raywenderlich.com/87899/make-simple-drawing-app-uikit-swift
     UIGraphicsBeginImageContextWithOptions(self.imageView.frame.size, NO, 0.0f);
