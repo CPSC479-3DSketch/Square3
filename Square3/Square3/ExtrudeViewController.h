@@ -17,6 +17,9 @@
 @property SCNNode *cameraSphere;
 @property SCNNode *floor;
 
+// property to determine whether the sketchy rendering should be displayed
+@property BOOL sketchyRendering;
+
 // properties to keep track of panning and pinching
 @property CGPoint prevPosition;
 @property CGFloat prevScale;
@@ -26,6 +29,13 @@
 
 // temporary button to allow extrusion
 @property (weak, nonatomic) IBOutlet UIButton *tempExtrudeButton;
+
+// node and shape arrays (indexes should match)
+@property NSMutableArray *wireframeNodes;
+@property NSMutableArray *shapeNodes;
+@property NSMutableArray *shapes;
+
+
 
 @end
 
