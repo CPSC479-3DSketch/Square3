@@ -6,6 +6,7 @@
 //
 
 #import "ExtrudeViewController.h"
+@import OpenGLES;
 
 @interface ExtrudeViewController ()
 
@@ -30,11 +31,36 @@
   [self.view addGestureRecognizer: self.extrudeGestureRecognizer];
   
     // Do any additional setup after loading the view, typically from a nib.
+    
+    
+    self.sketchyRendering = YES;
+    
+//    Shape *s = [[Shape alloc] init];
+//    CGPoint p1 = CGPointMake(100, 100);
+//    CGPoint p2 = CGPointMake(200, 100);
+//    CGPoint p3 = CGPointMake(200, 200);
+//    CGPoint p4 = CGPointMake(100, 200);
+//    NSValue *v1 = [NSValue valueWithCGPoint:p1];
+//    NSValue *v2 = [NSValue valueWithCGPoint:p2];
+//    NSValue *v3 = [NSValue valueWithCGPoint:p3];
+//    NSValue *v4 = [NSValue valueWithCGPoint:p4];
+//    
+//    s.exactRepresentation = [[NSMutableArray alloc] initWithCapacity:4];
+//    
+//    [s.exactRepresentation addObjectsFromArray:@[v1, v2, v3, v4]];
+//    
+//    [[Data sharedData] addShape:s];
+//    
+//    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
+    self.shapes = [[Data sharedData] fetchShapes];
+    self.wireframeNodes = [[NSMutableArray alloc] initWithCapacity:self.shapes.count];
+    self.shapeNodes = [[NSMutableArray alloc] initWithCapacity:self.shapes.count];
+    
     [self sceneSetup];
     [self drawFlatShapes];
 }
@@ -83,13 +109,7 @@
     [self.scene.rootNode addChildNode:self.cameraSphere];
     
     [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x - M_PI_2, self.cameraSphere.eulerAngles.y - 0, self.cameraSphere.eulerAngles.z)];
-    
-//
-//    
-//    [self.camera setPosition:SCNVector3Make(0.0, distance, -20.0)];
-//    [self.camera setRotation:SCNVector4Make(1.0, 0.0, 0.0, -(M_PI / 2))];
-    //[self.scene.rootNode addChildNode:self.camera];
-    
+
     // add lighting
     SCNNode *ambientNode = [[SCNNode alloc] init];
     ambientNode.light = [[SCNLight alloc] init];
@@ -108,14 +128,13 @@
 }
 
 - (void)drawFlatShapes {
-    NSArray *shapes = [(Data *)[Data sharedData] fetchShapes];
     
     // draw a Plane that will represent the floor
     SCNGeometry *floorGeom = [SCNPlane planeWithWidth:[(Data *)[Data sharedData] screenWidth] height:[(Data *)[Data sharedData] screenHeight]];
     [floorGeom.firstMaterial.diffuse setContents:[UIColor whiteColor]];
     self.floor = [SCNNode nodeWithGeometry:floorGeom];
     
-    for (Shape *shape in shapes) {
+    for (Shape *shape in self.shapes) {
         UIBezierPath *path = [[UIBezierPath alloc] init];
         
         NSValue *firstValue = [shape.sketchyRepresentation firstObject];
@@ -136,30 +155,52 @@
         
         // naïvely close the shape
         [path closePath];
-        
         [path setLineWidth:1.0];
-        
-        
-        // Commented out if we deicde to use more complex geometry
-        //NSData *data = [NSData dataWithBytes:vertices length:sizeof(vertices)];
-        //SCNGeometrySource *geomSource = [SCNGeometrySource geometrySourceWithData:data semantic:SCNGeometrySourceSemanticVertex vectorCount:c floatComponents:YES componentsPerVector:3 bytesPerComponent:sizeof(float) dataOffset:offsetof(SCNVector3, x) dataStride:sizeof(SCNVector3)];
-        //SCNGeometrySource *geomSource = [SCNGeometrySource geometrySourceWithVertices:vertices count:c];
-        //SCNGeometry *geom = [SCNGeometry geometryWithSources:@[geomSource] elements:<#(NSArray *)#>]
-        
         
         SCNGeometry *geom = [SCNShape shapeWithPath:path extrusionDepth:1.0];
         
-        // color the shape
-        [geom.firstMaterial.diffuse setContents:shape.color];
         
-        SCNNode *shapeToAdd = [SCNNode nodeWithGeometry:geom];
-        
-        // offset the node so the coordinates start in the bottom right of the "floor"
-        shapeToAdd.position = SCNVector3Make(-([(Data *)[Data sharedData] screenWidth] / 2), -([(Data *)[Data sharedData] screenHeight] / 2), 1.0);
-        
-        // add the shape to the floor
-        [self.floor addChildNode:shapeToAdd];
-        
+        if (!self.sketchyRendering) {
+            // color the shape
+            [geom.firstMaterial.diffuse setContents:shape.color];
+            SCNNode *shapeToAdd = [SCNNode nodeWithGeometry:geom];
+            
+            // offset the node so the coordinates start in the bottom right of the "floor"
+            shapeToAdd.position = SCNVector3Make(-([(Data *)[Data sharedData] screenWidth] / 2), -([(Data *)[Data sharedData] screenHeight] / 2), 1.0);
+            
+            // add the shape to the floor
+            [self.floor addChildNode:shapeToAdd];
+        } else {
+            // color the shape white
+            [geom.firstMaterial.diffuse setContents:[UIColor whiteColor]];
+            SCNNode *whiteShapeToAdd = [SCNNode nodeWithGeometry:geom];
+            [whiteShapeToAdd.geometry.firstMaterial setLightingModelName:SCNLightingModelConstant];
+            
+            // offset the node so the coordinates start in the bottom right of the "floor"
+            whiteShapeToAdd.position = SCNVector3Make(-([(Data *)[Data sharedData] screenWidth] / 2), -([(Data *)[Data sharedData] screenHeight] / 2), 1.0);
+            
+            // add the shape to the floor
+            [self.floor addChildNode:whiteShapeToAdd];
+            
+            // add the node to the array
+            [self.shapeNodes addObject:whiteShapeToAdd];
+
+            // make the sketchy wireframe
+            glLineWidth(2.0);
+            SCNGeometry *wireframeGeometry = [self createWireframeShapeFromPoints:shape.sketchyRepresentation withExtrusion:1.0];
+            SCNNode *wireframeToAdd = [SCNNode nodeWithGeometry:wireframeGeometry];
+            
+            // offset the node so the coordinates start in the bottom right of the "floor"
+            wireframeToAdd.position = SCNVector3Make(-([(Data *)[Data sharedData] screenWidth] / 2), -([(Data *)[Data sharedData] screenHeight] / 2), 1.0);
+            
+            // add the shape to the floor
+            [self.floor addChildNode:wireframeToAdd];
+            
+            // add the node to the array
+            [self.wireframeNodes addObject:wireframeToAdd];
+
+        }
+
     }
     
     // add the entire floor to the scene
@@ -169,8 +210,67 @@
     self.floor.rotation = SCNVector4Make(1.0, 0.0, 0.0, -(M_PI / 2));
 }
 
+// MARK: Custom Wireframe Generation
+- (SCNGeometry *)createWireframeShapeFromPoints:(NSArray *)points withExtrusion:(CGFloat)extrusion {
+    int c = (int)points.count;
+    SCNVector3 vertices[c * 2];
+    for (int i = 0; i < c; i++) {
+        NSValue *val = [points objectAtIndex:i];
+        CGPoint p = [val CGPointValue];
+        
+        // translate the coordinate system
+        CGPoint newPoint = CGPointMake(p.x, [(Data *)[Data sharedData] screenHeight] - p.y);
+        
+        vertices[i] = SCNVector3Make(newPoint.x, newPoint.y, 0);
+        vertices[c + i] = SCNVector3Make(newPoint.x, newPoint.y, extrusion);
+    }
+    SCNGeometrySource *geomSource = [SCNGeometrySource geometrySourceWithVertices:vertices count:(c * 2)];
+    
+    
+    // create the geometry element
+    // an "element" is an array of *indeces* to connect
+    int connections[c * 6];
+    for (int i = 0; i < c; i++) {
+        if (i == 0) {
+            connections[0] = 0;
+            connections[1] = 1;
+            
+            connections[c * 2] = c;
+            connections[(c * 2) + 1] = c + 1;
+            
+            connections[c * 4] = 0;
+            connections[(c * 4) + 1] = c;
+        } else {
+            // bottom face
+            connections[i * 2] = i;
+            connections[(i * 2) + 1] = i + 1;
+            // top face
+            connections[(c * 2) + (i * 2)] = c + i;
+            connections[(c * 2) + (i * 2) + 1] = c + i + 1;
+            // in-between
+            connections[(c * 4) + (i * 2)] = i;
+            connections[(c * 4) + (i * 2) + 1] = c + i;
+        }
+        
+        
+    }
+    // fix two connections (close the shape on both faces)
+    connections[(c * 2) - 1] = 0;
+    connections[(c * 4) - 1] = c;
+    
+    
+    NSData *data = [NSData dataWithBytes:connections length:sizeof(int) * c * 6];
+    
+    SCNGeometryElement *geomElement = [SCNGeometryElement geometryElementWithData:data primitiveType:SCNGeometryPrimitiveTypeLine primitiveCount:c * 6 bytesPerIndex:sizeof(int)];
+    
+    
+    
+    return [SCNGeometry geometryWithSources:@[geomSource] elements:@[geomElement]];
+}
+
 // MARK: Camera Control (and temporary extrusion)
 - (IBAction)did1FingerPan:(UIPanGestureRecognizer *)sender {
+<<<<<<< HEAD
     if (sender.state == UIGestureRecognizerStateBegan) {
         self.prevPosition = [sender translationInView:self.sceneView];
     } else if (sender.state == UIGestureRecognizerStateChanged) {
@@ -184,6 +284,83 @@
             [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x, self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
         } else {
             [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x - (delY / 200), self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
+=======
+    
+    if (self.tempExtrudeButton.selected) {  // handle extrusion temporarily
+        // TODO: Remove this once we get multitouch working
+        if (sender.state == UIGestureRecognizerStateBegan) {
+            self.prevPosition = [sender translationInView:self.sceneView];
+            NSArray *hits = [self.sceneView hitTest:[sender locationInView:self.sceneView] options:nil];
+            if ([hits count] > 0) {
+                
+                if (self.sketchyRendering) {
+                    for (SCNHitTestResult *hit in hits) {
+                        // make sure we get the shape node if we're sketchy rendering
+                        if ([hit node] != self.floor && [hit node] != self.camera && [hit node] != self.cameraSphere && [[hit node].geometry isKindOfClass:[SCNShape class]]) {
+                            self.extrudingNode = [hit node];
+                            break;
+                        }
+                    }
+                } else {
+                    for (SCNHitTestResult *hit in hits) {
+                        if ([hit node] != self.floor && [hit node] != self.camera && [hit node] != self.cameraSphere) {
+                            self.extrudingNode = [hit node];
+                            break;
+                        }
+                    }
+                }
+                
+                
+            }
+        } else if (sender.state == UIGestureRecognizerStateChanged) {
+            
+            if (self.sketchyRendering) {
+                CGPoint newPosition = [sender translationInView:self.sceneView];
+                float delY = newPosition.y - self.prevPosition.y;
+                
+                if (((SCNShape *)self.extrudingNode.geometry).extrusionDepth > 0.0 || delY < 0) {
+                    ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
+                    [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
+                }
+                
+                // find the index of the node in the local array
+                NSInteger index = [self.shapeNodes indexOfObject:self.extrudingNode];
+                Shape *s = [self.shapes objectAtIndex:index];
+                SCNNode *n = [self.wireframeNodes objectAtIndex:index];
+                
+                [n setGeometry:[self createWireframeShapeFromPoints:s.sketchyRepresentation withExtrusion:((SCNShape *)self.extrudingNode.geometry).extrusionDepth]];
+                
+                self.prevPosition = newPosition;
+            } else {
+                CGPoint newPosition = [sender translationInView:self.sceneView];
+                float delY = newPosition.y - self.prevPosition.y;
+                
+                
+                if (((SCNShape *)self.extrudingNode.geometry).extrusionDepth > 0.0 || delY < 0) {
+                    ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
+                    [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
+                }
+                self.prevPosition = newPosition;
+            }
+        }
+    } else {
+        if (sender.state == UIGestureRecognizerStateBegan) {
+            self.prevPosition = [sender translationInView:self.sceneView];
+        } else if (sender.state == UIGestureRecognizerStateChanged) {
+            CGPoint newPosition = [sender translationInView:self.sceneView];
+            float delX = newPosition.x - self.prevPosition.x;
+            float delY = newPosition.y - self.prevPosition.y;
+            
+            if (self.cameraSphere.eulerAngles.x > -0.05 && delY < 0) { // too low
+                [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x, self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
+            } else if (self.cameraSphere.eulerAngles.x < -(M_PI_2) && delY > 0) {
+                [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x, self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
+            } else {
+                [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x - (delY / 200), self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
+            }
+            
+            self.prevPosition = newPosition;
+>>>>>>> sketchy-texture
         }
         
         self.prevPosition = newPosition;
