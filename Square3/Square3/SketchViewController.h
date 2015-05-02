@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *colorSlider;
 @property (weak, nonatomic) IBOutlet UIButton *clearButton;
 
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
 @end
 

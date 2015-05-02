@@ -130,4 +130,82 @@
     [self.colorSwatch setBackgroundColor:self.drawingColor];
 }
 
+- (IBAction)modeChanged:(UISegmentedControl *)sender {
+    // clear the canvas
+    [self.tempImageView setImage:nil];
+    [self.imageView setImage:nil];
+    
+    // change parameters on shape class and redraw shapes
+    for (Shape *s in [[Data sharedData] fetchShapes]) {
+        s.showExactRepresentation = (sender.selectedSegmentIndex == 1);
+        
+        if (sender.selectedSegmentIndex == 0) {
+            CGPoint lastPoint = [((NSValue *)s.sketchyRepresentation.firstObject) CGPointValue];
+            for (NSValue *v in s.sketchyRepresentation) {
+                CGPoint p = [v CGPointValue];
+                
+                // Draw the strokes on the tempImageView
+                UIGraphicsBeginImageContextWithOptions(self.imageView.frame.size, NO, 0.0f);
+                CGContextRef context = UIGraphicsGetCurrentContext();
+                
+                [self.tempImageView.image drawInRect:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height)];
+                
+                CGContextMoveToPoint(context, lastPoint.x, lastPoint.y);
+                CGContextAddLineToPoint(context, p.x, p.y);
+                CGContextSetLineCap(context, kCGLineCapRound);
+                CGContextSetLineWidth(context, 2);
+                
+                CGContextSetStrokeColorWithColor(context, s.color.CGColor);
+                CGContextSetBlendMode(context, kCGBlendModeNormal);
+                CGContextStrokePath(context);
+                
+                // draw the stroke on the temporary context
+                self.tempImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+                
+                lastPoint = p;
+                
+                UIGraphicsEndImageContext();
+            }
+        } else {
+            CGPoint lastPoint = [((NSValue *)s.exactRepresentation.firstObject) CGPointValue];
+            for (NSValue *v in s.exactRepresentation) {
+                CGPoint p = [v CGPointValue];
+                
+                // Draw the strokes on the tempImageView
+                UIGraphicsBeginImageContextWithOptions(self.imageView.frame.size, NO, 0.0f);
+                CGContextRef context = UIGraphicsGetCurrentContext();
+                
+                [self.tempImageView.image drawInRect:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height)];
+                
+                CGContextMoveToPoint(context, lastPoint.x, lastPoint.y);
+                CGContextAddLineToPoint(context, p.x, p.y);
+                CGContextSetLineCap(context, kCGLineCapRound);
+                CGContextSetLineWidth(context, 2);
+                
+                CGContextSetStrokeColorWithColor(context, s.color.CGColor);
+                CGContextSetBlendMode(context, kCGBlendModeNormal);
+                CGContextStrokePath(context);
+                
+                // draw the stroke on the temporary context
+                self.tempImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+                
+                lastPoint = p;
+                
+                UIGraphicsEndImageContext();
+            }
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(self.imageView.frame.size, NO, 0.0f);
+        [self.imageView.image drawInRect:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+        [self.tempImageView.image drawInRect:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+        
+        [self.imageView setImage:UIGraphicsGetImageFromCurrentImageContext()];
+        UIGraphicsEndImageContext();
+        
+        [self.tempImageView setImage:nil];
+        
+    }
+    
+}
+
 @end

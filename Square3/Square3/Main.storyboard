@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C2055" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6724" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
     </dependencies>
     <scenes>
         <!--2D Sketch-->
@@ -61,6 +61,21 @@
                                     <action selector="clearCanvas:" destination="9pv-A4-QxB" eventType="touchUpInside" id="S0C-q6-3SW"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EnT-OW-8GQ">
+                                <rect key="frame" x="237" y="21" width="127" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="127" id="bSN-BR-e7d"/>
+                                    <constraint firstAttribute="height" constant="28" id="hFm-yM-RpP"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Sketchy"/>
+                                    <segment title="Exact"/>
+                                </segments>
+                                <color key="tintColor" red="0.0" green="0.68627450980000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="modeChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="LGD-gu-CDU"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -68,12 +83,14 @@
                             <constraint firstItem="me0-68-JRz" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="1ua-t9-4hd"/>
                             <constraint firstItem="OcV-wB-GSp" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="Alw-og-jng"/>
                             <constraint firstItem="z0J-ZR-tcG" firstAttribute="leading" secondItem="vu0-rl-BtB" secondAttribute="trailing" constant="8" id="Hm7-rf-E6A"/>
+                            <constraint firstItem="EnT-OW-8GQ" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="1" id="PTm-Rh-rud"/>
                             <constraint firstAttribute="bottom" secondItem="TUJ-Zm-d7G" secondAttribute="bottom" id="Q0n-LU-469"/>
                             <constraint firstItem="TUJ-Zm-d7G" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" id="RQx-XQ-R1O"/>
                             <constraint firstAttribute="bottom" secondItem="OcV-wB-GSp" secondAttribute="bottom" id="Ssh-Vg-Vlq"/>
                             <constraint firstItem="TUJ-Zm-d7G" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="a43-cI-H0w"/>
                             <constraint firstItem="z0J-ZR-tcG" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="ae5-HC-JCI"/>
                             <constraint firstItem="OcV-wB-GSp" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" id="azh-Sm-e1Q"/>
+                            <constraint firstAttribute="centerX" secondItem="EnT-OW-8GQ" secondAttribute="centerX" id="iPJ-RK-EMj"/>
                             <constraint firstAttribute="trailing" secondItem="TUJ-Zm-d7G" secondAttribute="trailing" id="jXf-3P-LDv"/>
                             <constraint firstItem="vu0-rl-BtB" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="1" id="tUO-ix-Udv"/>
                             <constraint firstItem="me0-68-JRz" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" constant="16" id="thM-8R-CGZ"/>
@@ -88,6 +105,7 @@
                         <outlet property="colorSlider" destination="vu0-rl-BtB" id="QO9-nz-PgT"/>
                         <outlet property="colorSwatch" destination="z0J-ZR-tcG" id="Shv-iF-J8r"/>
                         <outlet property="imageView" destination="OcV-wB-GSp" id="jTq-XQ-czk"/>
+                        <outlet property="segmentedControl" destination="EnT-OW-8GQ" id="uLA-8E-uoI"/>
                         <outlet property="tempImageView" destination="TUJ-Zm-d7G" id="ng6-mg-0Jt"/>
                     </connections>
                 </viewController>
@@ -118,7 +136,7 @@
                                 </connections>
                             </sceneKitView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hvp-zB-XUA">
-                                <rect key="frame" x="237" y="28" width="127" height="29"/>
+                                <rect key="frame" x="237" y="21" width="127" height="29"/>
                                 <segments>
                                     <segment title="Sketchy"/>
                                     <segment title="Exact"/>
@@ -133,7 +151,7 @@
                             <constraint firstAttribute="centerX" secondItem="Hvp-zB-XUA" secondAttribute="centerX" id="beg-nB-zna"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="B8d-k7-nu5" secondAttribute="bottom" id="f6L-wH-iXg"/>
                             <constraint firstAttribute="trailing" secondItem="B8d-k7-nu5" secondAttribute="trailing" id="jF8-hq-fO3"/>
-                            <constraint firstItem="Hvp-zB-XUA" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="8" id="mAP-oE-6ay"/>
+                            <constraint firstItem="Hvp-zB-XUA" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="1" id="mAP-oE-6ay"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="3D Extrude" image="cube" id="cPa-gy-q4n"/>

@@ -27,9 +27,7 @@ typedef enum { Triangle = 3, Rectangle = 4, Pentagon = 5, Hexagon = 6, Heptagon 
 // the shape's color, since this is super easy to add.
 @property UIColor *color;
 
-// an enumeration to determine the shape's type, if known
-// TODO: Add this in. Not sure how best to do this in Obj-C.
-
+// TODO: Make use of this
 // The path of extrusion. For now, this should be a single-element array or nil
 // if the shape has not yet been extruded. I made it an array, though, to allow
 // for non-linear extrusion in the future.
