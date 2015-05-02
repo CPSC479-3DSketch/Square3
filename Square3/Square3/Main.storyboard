@@ -153,11 +153,7 @@
                         <action selector="didPinch:" destination="8rJ-Kc-sve" id="ABi-8E-kKs"/>
                     </connections>
                 </pinchGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="3" maximumNumberOfTouches="3" id="S9I-Sm-zkf" userLabel="2-Finger Pan GR">
-                    <connections>
-                        <action selector="did2FingerPan:" destination="8rJ-Kc-sve" id="YTi-MY-FqN"/>
-                    </connections>
-                </panGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="3" maximumNumberOfTouches="3" id="S9I-Sm-zkf" userLabel="2-Finger Pan GR"/>
             </objects>
             <point key="canvasLocation" x="750" y="361"/>
         </scene>

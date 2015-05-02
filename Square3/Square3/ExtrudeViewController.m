@@ -222,6 +222,8 @@
       CGPoint newPosition = [sender translationInView:self.sceneView];
       float delY = newPosition.y - self.prevPosition.y;
       
+      if ([self.extrudingNode.geometry isKindOfClass:[SCNPlane class]])
+        return;
       
       if (((SCNShape *)self.extrudingNode.geometry).extrusionDepth - delY > 0.0 || delY < 0) {
         ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
