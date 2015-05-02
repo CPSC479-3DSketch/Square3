@@ -17,41 +17,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   
-  // Segmented Control
-  [self.segmentedControl addTarget:self
+    // Segmented Control
+    [self.segmentedControl addTarget:self
                               action:@selector(switchRepresentationMode:)
                     forControlEvents:UIControlEventValueChanged];
 
+    // Extrusion gesture recognizer
+    self.extrudeGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(did2FingerPan:)];
   
-  // Extrusion gesture recognizer
-  self.extrudeGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(did2FingerPan:)];
-  
-  self.extrudeGestureRecognizer.minimumNumberOfTouches = 2;
-  self.extrudeGestureRecognizer.maximumNumberOfTouches = 2;
-  [self.view addGestureRecognizer: self.extrudeGestureRecognizer];
-  
-    // Do any additional setup after loading the view, typically from a nib.
-    
-    
+    self.extrudeGestureRecognizer.minimumNumberOfTouches = 2;
+    self.extrudeGestureRecognizer.maximumNumberOfTouches = 2;
+    [self.view addGestureRecognizer: self.extrudeGestureRecognizer];
+
     self.sketchyRendering = YES;
     
-//    Shape *s = [[Shape alloc] init];
-//    CGPoint p1 = CGPointMake(100, 100);
-//    CGPoint p2 = CGPointMake(200, 100);
-//    CGPoint p3 = CGPointMake(200, 200);
-//    CGPoint p4 = CGPointMake(100, 200);
-//    NSValue *v1 = [NSValue valueWithCGPoint:p1];
-//    NSValue *v2 = [NSValue valueWithCGPoint:p2];
-//    NSValue *v3 = [NSValue valueWithCGPoint:p3];
-//    NSValue *v4 = [NSValue valueWithCGPoint:p4];
-//    
-//    s.exactRepresentation = [[NSMutableArray alloc] initWithCapacity:4];
-//    
-//    [s.exactRepresentation addObjectsFromArray:@[v1, v2, v3, v4]];
-//    
-//    [[Data sharedData] addShape:s];
-//    
-//    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -270,7 +249,7 @@
 
 // MARK: Camera Control (and temporary extrusion)
 - (IBAction)did1FingerPan:(UIPanGestureRecognizer *)sender {
-<<<<<<< HEAD
+
     if (sender.state == UIGestureRecognizerStateBegan) {
         self.prevPosition = [sender translationInView:self.sceneView];
     } else if (sender.state == UIGestureRecognizerStateChanged) {
@@ -284,87 +263,11 @@
             [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x, self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
         } else {
             [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x - (delY / 200), self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
-=======
-    
-    if (self.tempExtrudeButton.selected) {  // handle extrusion temporarily
-        // TODO: Remove this once we get multitouch working
-        if (sender.state == UIGestureRecognizerStateBegan) {
-            self.prevPosition = [sender translationInView:self.sceneView];
-            NSArray *hits = [self.sceneView hitTest:[sender locationInView:self.sceneView] options:nil];
-            if ([hits count] > 0) {
-                
-                if (self.sketchyRendering) {
-                    for (SCNHitTestResult *hit in hits) {
-                        // make sure we get the shape node if we're sketchy rendering
-                        if ([hit node] != self.floor && [hit node] != self.camera && [hit node] != self.cameraSphere && [[hit node].geometry isKindOfClass:[SCNShape class]]) {
-                            self.extrudingNode = [hit node];
-                            break;
-                        }
-                    }
-                } else {
-                    for (SCNHitTestResult *hit in hits) {
-                        if ([hit node] != self.floor && [hit node] != self.camera && [hit node] != self.cameraSphere) {
-                            self.extrudingNode = [hit node];
-                            break;
-                        }
-                    }
-                }
-                
-                
-            }
-        } else if (sender.state == UIGestureRecognizerStateChanged) {
-            
-            if (self.sketchyRendering) {
-                CGPoint newPosition = [sender translationInView:self.sceneView];
-                float delY = newPosition.y - self.prevPosition.y;
-                
-                if (((SCNShape *)self.extrudingNode.geometry).extrusionDepth > 0.0 || delY < 0) {
-                    ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
-                    [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
-                }
-                
-                // find the index of the node in the local array
-                NSInteger index = [self.shapeNodes indexOfObject:self.extrudingNode];
-                Shape *s = [self.shapes objectAtIndex:index];
-                SCNNode *n = [self.wireframeNodes objectAtIndex:index];
-                
-                [n setGeometry:[self createWireframeShapeFromPoints:s.sketchyRepresentation withExtrusion:((SCNShape *)self.extrudingNode.geometry).extrusionDepth]];
-                
-                self.prevPosition = newPosition;
-            } else {
-                CGPoint newPosition = [sender translationInView:self.sceneView];
-                float delY = newPosition.y - self.prevPosition.y;
-                
-                
-                if (((SCNShape *)self.extrudingNode.geometry).extrusionDepth > 0.0 || delY < 0) {
-                    ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
-                    [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
-                }
-                self.prevPosition = newPosition;
-            }
-        }
-    } else {
-        if (sender.state == UIGestureRecognizerStateBegan) {
-            self.prevPosition = [sender translationInView:self.sceneView];
-        } else if (sender.state == UIGestureRecognizerStateChanged) {
-            CGPoint newPosition = [sender translationInView:self.sceneView];
-            float delX = newPosition.x - self.prevPosition.x;
-            float delY = newPosition.y - self.prevPosition.y;
-            
-            if (self.cameraSphere.eulerAngles.x > -0.05 && delY < 0) { // too low
-                [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x, self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
-            } else if (self.cameraSphere.eulerAngles.x < -(M_PI_2) && delY > 0) {
-                [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x, self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
-            } else {
-                [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x - (delY / 200), self.cameraSphere.eulerAngles.y - (delX / 200), self.cameraSphere.eulerAngles.z)];
-            }
-            
-            self.prevPosition = newPosition;
->>>>>>> sketchy-texture
         }
         
         self.prevPosition = newPosition;
     }
+
 }
 
 
@@ -393,20 +296,56 @@
         self.prevPosition = [sender translationInView:self.sceneView];
         NSArray *hits = [self.sceneView hitTest:[sender locationInView:self.sceneView] options:nil];
         if ([hits count] > 0) {
-            self.extrudingNode = [((SCNHitTestResult *)hits.firstObject) node];
+            
+            if (self.sketchyRendering) {
+                for (SCNHitTestResult *hit in hits) {
+                    // make sure we get the shape node if we're sketchy rendering
+                    if ([hit node] != self.floor && [hit node] != self.camera && [hit node] != self.cameraSphere && [[hit node].geometry isKindOfClass:[SCNShape class]]) {
+                        self.extrudingNode = [hit node];
+                        break;
+                    }
+                }
+            } else {
+                for (SCNHitTestResult *hit in hits) {
+                    if ([hit node] != self.floor && [hit node] != self.camera && [hit node] != self.cameraSphere) {
+                        self.extrudingNode = [hit node];
+                        break;
+                    }
+                }
+            }
+            
+            
         }
     } else if (sender.state == UIGestureRecognizerStateChanged) {
-      CGPoint newPosition = [sender translationInView:self.sceneView];
-      float delY = newPosition.y - self.prevPosition.y;
-      
-      if ([self.extrudingNode.geometry isKindOfClass:[SCNPlane class]])
-        return;
-      
-      if (((SCNShape *)self.extrudingNode.geometry).extrusionDepth - delY > 0.0 || delY < 0) {
-        ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
-        [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
-      }
-      self.prevPosition = newPosition;
+        
+        if (self.sketchyRendering) {
+            CGPoint newPosition = [sender translationInView:self.sceneView];
+            float delY = newPosition.y - self.prevPosition.y;
+            
+            if (((SCNShape *)self.extrudingNode.geometry).extrusionDepth > 0.0 || delY < 0) {
+                ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
+                [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
+            }
+            
+            // find the index of the node in the local array
+            NSInteger index = [self.shapeNodes indexOfObject:self.extrudingNode];
+            Shape *s = [self.shapes objectAtIndex:index];
+            SCNNode *n = [self.wireframeNodes objectAtIndex:index];
+            
+            [n setGeometry:[self createWireframeShapeFromPoints:s.sketchyRepresentation withExtrusion:((SCNShape *)self.extrudingNode.geometry).extrusionDepth]];
+            
+            self.prevPosition = newPosition;
+        } else {
+            CGPoint newPosition = [sender translationInView:self.sceneView];
+            float delY = newPosition.y - self.prevPosition.y;
+            
+            
+            if (((SCNShape *)self.extrudingNode.geometry).extrusionDepth > 0.0 || delY < 0) {
+                ((SCNShape *)self.extrudingNode.geometry).extrusionDepth -= delY;
+                [self.extrudingNode setPosition:SCNVector3Make(self.extrudingNode.position.x, self.extrudingNode.position.y, self.extrudingNode.position.z - (delY * 0.5))];
+            }
+            self.prevPosition = newPosition;
+        }
     }
 }
 
@@ -416,9 +355,11 @@
   switch (segmentedControl.selectedSegmentIndex) {
     case 0:
       NSLog(@"       Sketchy selected");
+          self.sketchyRendering = YES;
       break;
     case 1:
       NSLog(@"       Exact selected");
+          self.sketchyRendering = NO;
     default:
       break;
   }
