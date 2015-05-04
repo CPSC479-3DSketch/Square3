@@ -8,8 +8,12 @@
 
 #import "CV.h"
 #import "Shape.h"
+#include <stack>
 #include <vector>
+#include <stdio.h>
 #import <opencv2/opencv.hpp>
+
+
 
 @implementation CV
 
@@ -81,7 +85,8 @@
 }
 
 + (void) generateExactRepresentation: (Shape *) shape {
-    [CV findShapeInContour: [CV convertShapeToUglyVector: shape]: shape];
+//    [CV findShapeInContour: [CV convertShapeToUglyVector: shape]: shape];
+    [CV segmentedLeastSquares:shape];
 }
 
 
@@ -134,7 +139,7 @@
 //        [shape setShapeName: polygonApproximation.size() > 12 ? 365 : polygonApproximation.size()];
     }
     
-    int threshold = (int) contour.size()*.05 <= 2 ? 3 : (int) contour.size()*.05;
+    int threshold = (int) contour.size()*.15 <= 2 ? 3 : (int) contour.size()*.15;
     
     NSLog(@"-----> Threshold = %d.", threshold);
     if(polygonApproximation.size() > 0) {
@@ -174,12 +179,157 @@
             NSLog(@"-----> Here, added end to representation.");
         }
         
-         NSLog(@"-----> Polygon has %ld corners", (unsigned long)shape.exactRepresentation.count);
+//        NSLog(@"-----> Polygon has %ld corners", (unsigned long)shape.exactRepresentation.count);
+//        for(int i = 0; i < shape.exactRepresentation.count; i++) {
+//            NSLog(@"      %@", shape.exactRepresentation[i]);
+//        }
+//
+//        
+//        for(int i =0; i < shape.exactRepresentation.count; i++) {
+//            CGPoint p1 = [shape.exactRepresentation[i] CGPointValue];
+//            for(int j = i + 1; j < shape.exactRepresentation.count; j++) {
+//                CGPoint p2 = [shape.exactRepresentation[j] CGPointValue];
+//                if(p1.x == p2.x && p1.y == p2.y) {
+//                    NSLog(@"      %@", shape.exactRepresentation[i]);
+//
+//                    [shape.exactRepresentation removeObjectAtIndex:j];
+//                }
+//            }
+//        }
+        
+        NSLog(@"-----> Polygon has %ld corners", (unsigned long)shape.exactRepresentation.count);
         for(int i = 0; i < shape.exactRepresentation.count; i++) {
-             NSLog(@"      %@", shape.exactRepresentation[i]);
+            NSLog(@"      %@", shape.exactRepresentation[i]);
         }
+
+        
+        shape.sketchyRepresentation = shape.exactRepresentation;
         
     }
+}
+
+
++ (void) segmentedLeastSquares: (Shape *) shape {
+    // sort the point with x1 < x2 < ... < xn
+    [shape.sketchyRepresentation sortedArrayUsingComparator:^NSComparisonResult(NSValue *obj1, NSValue *obj2) {
+        CGPoint p1 = [obj1 CGPointValue];
+        CGPoint p2 = [obj2 CGPointValue];
+        if (p1.x == p2.x) {
+            if(p1.y < p2.y) {
+                return NSOrderedAscending;
+            } else {
+                return NSOrderedDescending;
+            }
+        } else if (p1.x < p2.x) {
+            return NSOrderedAscending;
+        } else {
+            return NSOrderedDescending;
+        }
+    }];
+    
+    // create arrays that hold least square calculations
+    shape.exactRepresentation = [[NSMutableArray alloc] init];
+    
+    // CODE FROM https://github.com/kartikkukreja/blog-codes/blob/master/src/Segmented%20Least%20Squares%20Problem.cpp
+    // WAS EDITED AND REFACTORED TO USED IN THIS PROJECT
+
+    int numPoints = shape.sketchyRepresentation.count;
+    NSLog(@"Size of sketchy: %d, numPoints = %d", shape.sketchyRepresentation.count, numPoints);
+    NSMutableArray *points = [[NSMutableArray alloc] init];
+    
+    [points addObject: [NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)]];
+    [points addObjectsFromArray:shape.sketchyRepresentation];
+    
+     NSLog(@"Size of points: %d, numPoints = %d", points.count, numPoints);
+    
+    
+    long long cumulative_x[numPoints], cumulative_y[numPoints], cumulative_xy[numPoints], cumulative_xSqr[numPoints];
+    
+    double slope[numPoints][numPoints], intercept[numPoints][numPoints], E[numPoints][numPoints];
+    memset( slope, 0, (numPoints)*(numPoints)*sizeof(double));
+    memset( intercept, 0, (numPoints)*(numPoints)*sizeof(double));
+    memset( E, 0, (numPoints)*(numPoints)*sizeof(double));
+    
+    
+    // OPT[i] is the optimal solution (minimum cost) for the points {points[1], points[2], ..., points[i]}
+    double OPT[numPoints + 1];
+    
+    // [opt_segment[i], i] is the last segment in the optimal solution
+    // for the points {points[1], points[2], ..., points[i]}
+    int opt_segment[numPoints + 1];
+    
+    long long x_sum, y_sum, xy_sum, xsqr_sum, num, denom;
+    
+    // precompute the error terms
+    cumulative_x[0] = cumulative_y[0] = cumulative_xy[0] = cumulative_xSqr[0] = 0;
+    for (int j = 1; j <= numPoints; j++)	{
+        CGPoint currentPoint = [points[j] CGPointValue];
+        cumulative_x[j] = cumulative_x[j-1] + currentPoint.x;
+        cumulative_y[j] = cumulative_y[j-1] + currentPoint.y;
+        cumulative_xy[j] = cumulative_xy[j-1] + currentPoint.x * currentPoint.y;
+        cumulative_xSqr[j] = cumulative_xSqr[j-1] + currentPoint.x * currentPoint.x;
+        
+        for (int i = 1; i <= j; i++)	{
+            int interval = j - i + 1;
+            x_sum = cumulative_x[j] - cumulative_x[i-1];
+            y_sum = cumulative_y[j] - cumulative_y[i-1];
+            xy_sum = cumulative_xy[j] - cumulative_xy[i-1];
+            xsqr_sum = cumulative_xSqr[j] - cumulative_xSqr[i-1];
+            
+            num = interval * xy_sum - x_sum * y_sum;
+            if (num == 0)
+                slope[i][j] = 0.0;
+            else {
+                denom = interval * xsqr_sum - x_sum * x_sum;
+                slope[i][j] = (denom == 0) ? std::numeric_limits<double>::infinity() : (num / double(denom));
+            }
+            intercept[i][j] = (y_sum - slope[i][j] * x_sum) / double(interval);
+            
+            E[i][j] = 0.0;
+            for (int k = i; k <= j; k++)	{
+                CGPoint point = [points[k] CGPointValue];
+                double tmp = point.y - slope[i][j] * point.x - intercept[i][j];
+                E[i][j] += tmp * tmp;
+            }
+        }
+    }
+    
+    OPT[0] = opt_segment[0] = 0;
+    double mx, cost = 850;
+    int i, j, k;
+    for (j = 1; j <= numPoints; j++)	{
+        for (i = 1, mx = std::numeric_limits<double>::infinity(), k = 0; i <= j; i++)	{
+            double tmp = E[i][j] + OPT[i-1];
+            if (tmp < mx)	{
+                mx = tmp;
+                k = i;
+            }
+        }
+        OPT[j] = mx + cost;
+        opt_segment[j] = k;
+    }
+    
+    std::stack <int> segments;
+    for (i = numPoints, j = opt_segment[numPoints]; i > 0; i = j-1, j = opt_segment[i])	{
+        segments.push(i);
+        segments.push(j);
+    }
+    
+    shape.exactRepresentation = [[NSMutableArray alloc] init];
+    NSLog(@"Composed of %lu Segments", segments.size()/2);
+    while (!segments.empty())	{
+        i = segments.top(); segments.pop();
+        j = segments.top(); segments.pop();
+        NSLog(@"Segment (y = %lf * x + %lf) from points %d to %d with square error %lf.\n",
+               slope[i][j], intercept[i][j], i, j, E[i][j]);
+        
+        
+        [shape.exactRepresentation addObject: points[i]];
+        [shape.exactRepresentation addObject: points[j]];
+    }
+//    shape.sketchyRepresentation = shape.exactRepresentation;
+    NSLog(@"\n");
+
 }
 
 
