@@ -31,10 +31,4 @@ typedef enum { Triangle = 3, Rectangle = 4, Pentagon = 5, Hexagon = 6, Heptagon 
 // Property to capture the depth of the extrusion
 @property CGFloat extrusionDepth;
 
-// TODO: Make use of this
-// The path of extrusion. For now, this should be a single-element array or nil
-// if the shape has not yet been extruded. I made it an array, though, to allow
-// for non-linear extrusion in the future.
-@property NSMutableArray *extrusionPath;
-
 @end

@@ -112,6 +112,10 @@
     self.floor = [SCNNode nodeWithGeometry:floorGeom];
     
     for (Shape *shape in self.shapes) {
+      
+        if (!shape.extrusionDepth)
+          shape.extrusionDepth = 1.0;
+      
         UIBezierPath *path = [[UIBezierPath alloc] init];
         
         NSValue *firstValue = [shape.preferredRepresentation firstObject];
@@ -134,7 +138,7 @@
         [path closePath];
         [path setLineWidth:1.0];
         
-        SCNGeometry *geom = [SCNShape shapeWithPath:path extrusionDepth:1.0];
+        SCNGeometry *geom = [SCNShape shapeWithPath:path extrusionDepth:shape.extrusionDepth];
         
         
         if (!self.sketchyRendering) {
@@ -143,7 +147,7 @@
             SCNNode *shapeToAdd = [SCNNode nodeWithGeometry:geom];
             
             // offset the node so the coordinates start in the bottom right of the "floor"
-            shapeToAdd.position = SCNVector3Make(-([(Data *)[Data sharedData] screenWidth] / 2), -([(Data *)[Data sharedData] screenHeight] / 2), 1.0);
+            shapeToAdd.position = SCNVector3Make(-([(Data *)[Data sharedData] screenWidth] / 2), -([(Data *)[Data sharedData] screenHeight] / 2), shape.extrusionDepth / 2);
             
             // add the shape to the floor
             [self.floor addChildNode:shapeToAdd];
@@ -157,7 +161,7 @@
             [whiteShapeToAdd.geometry.firstMaterial setLightingModelName:SCNLightingModelConstant];
             
             // offset the node so the coordinates start in the bottom right of the "floor"
-            whiteShapeToAdd.position = SCNVector3Make(-([(Data *)[Data sharedData] screenWidth] / 2), -([(Data *)[Data sharedData] screenHeight] / 2), 1.0);
+            whiteShapeToAdd.position = SCNVector3Make(-([(Data *)[Data sharedData] screenWidth] / 2), -([(Data *)[Data sharedData] screenHeight] / 2), shape.extrusionDepth / 2);
             
             // add the shape to the floor
             [self.floor addChildNode:whiteShapeToAdd];
@@ -167,7 +171,7 @@
 
             // make the sketchy wireframe
             glLineWidth(2.0);
-            SCNGeometry *wireframeGeometry = [self createWireframeShapeFromPoints:shape.preferredRepresentation withExtrusion:1.0];
+            SCNGeometry *wireframeGeometry = [self createWireframeShapeFromPoints:shape.preferredRepresentation withExtrusion:shape.extrusionDepth];
             SCNNode *wireframeToAdd = [SCNNode nodeWithGeometry:wireframeGeometry];
             
             // offset the node so the coordinates start in the bottom right of the "floor"
@@ -248,7 +252,7 @@
     return [SCNGeometry geometryWithSources:@[geomSource] elements:@[geomElement]];
 }
 
-// MARK: Camera Control (and temporary extrusion)
+// MARK: Camera Control
 - (IBAction)did1FingerPan:(UIPanGestureRecognizer *)sender {
 
     if (sender.state == UIGestureRecognizerStateBegan) {
