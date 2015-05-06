@@ -22,12 +22,38 @@
 -(id)init{
     if (self = [super init])
         self.shapes = [[NSMutableArray alloc] init];
-    
+  
+    SCNCamera *cam = [[SCNCamera alloc] init];
+    cam.automaticallyAdjustsZRange = YES;
+    cam.usesOrthographicProjection = NO;
+    float distance = 530.0;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+      distance = 800.0;
+    }
+    [self setCamera:[[SCNNode alloc] init]];
+    [self.camera setCamera: cam];
+    [self.camera setPosition:SCNVector3Make(0.0, 0.0, distance)];
+  
+    self.firstLoad = YES;
     return self;
+}
+
+- (BOOL) isFirstLoad{
+  
+  BOOL flag = self.firstLoad;
+  
+  if (self.firstLoad)
+    self.firstLoad = NO;
+  
+  return flag;
 }
 
 - (NSMutableArray *)fetchShapes {
     return self.shapes;
+}
+
+- (SCNNode *) fetchCamera{
+  return self.camera;
 }
 
 - (void) clearShapes {

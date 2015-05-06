@@ -43,14 +43,16 @@
     [super viewDidAppear:animated];
     
     // animate the 2D "wall" becoming the "floor"
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [SCNTransaction begin];
-        [SCNTransaction setAnimationDuration:1];
-        [self.cameraSphere setPosition:SCNVector3Make(0.0, 0.0, self.cameraSphere.position.z + 100)];
-        [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x + M_PI_4, self.cameraSphere.eulerAngles.y - 0, self.cameraSphere.eulerAngles.z)];
-        [SCNTransaction commit];
-    });
-    
+    if ([[Data sharedData] isFirstLoad]){
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+          [SCNTransaction begin];
+          [SCNTransaction setAnimationDuration:1];
+          [self.cameraSphere setPosition:SCNVector3Make(0.0, 0.0, self.cameraSphere.position.z + 100)];
+          [self.cameraSphere setEulerAngles:SCNVector3Make(self.cameraSphere.eulerAngles.x + M_PI_4, self.cameraSphere.eulerAngles.y - 0, self.cameraSphere.eulerAngles.z)];
+          [SCNTransaction commit];
+      });
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,20 +65,8 @@
     
     self.scene = [[SCNScene alloc] init];
     [self.sceneView setScene:self.scene];
-    
-    SCNCamera *cam = [[SCNCamera alloc] init];
-    cam.automaticallyAdjustsZRange = YES;
-    cam.usesOrthographicProjection = NO;
-    
-    float distance = 530.0;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        distance = 800.0;
-    }
-    
-    self.camera = [[SCNNode alloc] init];
-    [self.camera setCamera:cam];
-    [self.camera setPosition:SCNVector3Make(0.0, 0.0, distance)];
-    
+    self.camera = [(Data*)[Data sharedData] camera];
+  
     // camera sphere implementation from http://stackoverflow.com/a/25674762
     self.cameraSphere = [[SCNNode alloc] init];
     [self.cameraSphere addChildNode:self.camera];
@@ -91,7 +81,6 @@
     ambientNode.light.color = [UIColor colorWithWhite:0.67 alpha:1.0];
     [self.scene.rootNode addChildNode:ambientNode];
     
-    // TODO: improve the lighting so it's more even
     SCNNode *omniNode = [[SCNNode alloc] init];
     omniNode.light = [[SCNLight alloc] init];
     omniNode.light.type = SCNLightTypeOmni;
@@ -356,7 +345,7 @@
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         NSInteger index = [self.shapeNodes indexOfObject:self.extrudingNode];
         Shape *s = [[[Data sharedData] fetchShapes] objectAtIndex:index];
-        s.extrusionDepth = self.currentExtrusionDepth;
+        s.extrusionDepth = self.currentExtrusionDepth / 2;
     }
 }
 

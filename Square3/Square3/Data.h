@@ -8,15 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import "Shape.h"
+@import OpenGLES;
+@import SceneKit;
+
 
 @interface Data : NSObject
 
 @property NSMutableArray *shapes;
 @property float screenWidth;
 @property float screenHeight;
+@property SCNNode *camera;
+@property BOOL firstLoad;
 
 + (id)sharedData;
+- (BOOL) isFirstLoad;
 - (NSMutableArray *) fetchShapes;
+- (SCNNode *) fetchCamera;
 - (void) addShape: (Shape *)shape;
 - (void) clearShapes;
 - (void) loadDataFromDisk;
